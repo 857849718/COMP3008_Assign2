@@ -27,7 +27,7 @@
             this.phone = phone;
             this.password = password;
         }
-
+        
         // accessors/mutators
         public string FirstName { get; set; }
         public string LastName { get; set; }
