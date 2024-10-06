@@ -16,9 +16,10 @@
         private string address;
         private long phone;
         private string password;
+        private int accountID;
 
         // constructor
-        public UserProfile(string firstName, string lastName, string email, string address, long phone, string password)
+        public UserProfile(string firstName, string lastName, string email, string address, long phone, string password, int accountID)
         {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -26,6 +27,7 @@
             this.address = address;
             this.phone = phone;
             this.password = password;
+            this.accountID = accountID;
         }
         
         // accessors/mutators
@@ -35,6 +37,7 @@
         public string Address { get; set; }
         public long Phone { get; set; }
         public string Password { get; set; }
+        public int AccountID { get; set; }
 
     }
 }
