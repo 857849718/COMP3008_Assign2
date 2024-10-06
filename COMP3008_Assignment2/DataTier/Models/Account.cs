@@ -9,7 +9,7 @@
         private string lastName;
 
         // constructor
-        public Account (int accountID, double balance, string firstName, string lastName)
+        public Account(int accountID, double balance, string firstName, string lastName)
         {
             this.accountID = accountID;
             this.balance = balance;
