@@ -150,5 +150,41 @@ namespace DataTier.Database
 
             return accountList;
         }
+
+        public static Account GetAccountByID(int accountID)
+        {
+            Account account = null;
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT * FROM Accounts WHERE AccountID = @AccountID";
+                        command.Parameters.AddWithValue("@AccountID", accountID);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account = new Account(
+                                    Convert.ToDouble(reader["Balance"]),
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString()
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return account;
+        }
     }
 }
