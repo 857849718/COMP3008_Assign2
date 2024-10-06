@@ -41,6 +41,7 @@ namespace DataTier.Database
             catch (Exception oof)
             {
                 Console.WriteLine("Error: " + oof.Message);
+                return false;
             }
 
             return false;
@@ -71,6 +72,42 @@ namespace DataTier.Database
             catch (Exception oof)
             {
                 Console.WriteLine("Error: " + oof.Message);
+                return false;
+            }
+
+            return false;
+        }
+
+        public static bool Update(Account account)
+        {
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = $"UPDATE Accounts SET Balance = @Balance, FirstName = @FirstName, LastName = @LastName WHERE AccountID = @AccountID";
+
+                        command.Parameters.AddWithValue("@Balance", account.Balance);
+                        command.Parameters.AddWithValue("@FirstName", account.FirstName);
+                        command.Parameters.AddWithValue("@LastName", account.LastName);
+                        command.Parameters.AddWithValue("@AccountID", account.AccountID);
+
+                        int rowsUpdated = command.ExecuteNonQuery();
+
+                        if (rowsUpdated > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+                return false;
             }
 
             return false;
