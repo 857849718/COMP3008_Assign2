@@ -130,10 +130,12 @@ namespace DataTier.Database
                         {
                             while (reader.Read())
                             {
-                                Account account = new Account();
-                                account.Balance = Convert.ToDouble(reader["Balance"]);
-                                account.FirstName = reader["FirstName"].ToString();
-                                account.LastName = reader["LastName"].ToString();
+                                Account account = new Account(
+                                    Convert.ToDouble(reader["Balance"]),
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString()
+                                );
+                                
                                 
                                 accountList.Add(account);
                             }
