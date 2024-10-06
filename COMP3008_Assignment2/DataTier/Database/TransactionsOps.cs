@@ -5,6 +5,7 @@ namespace DataTier.Database
 {
     /*  class used to perform operations
      *  on the Transactions table;
+     *  shouldn't have a Delete or Update method;
      */
     public class TransactionsOps
     {
@@ -47,6 +48,47 @@ namespace DataTier.Database
             }
 
             return false;
+        }
+
+        public static List<Transaction> GetAll()
+        {
+            // initalize list of transactions
+            List<Transaction> transactionList = new List<Transaction>();
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // query to retrieve all records from Transactions table
+                        command.CommandText = "SELECT * FROM Transactions";
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // create new transaction with read values
+                                Transaction transaction = new Transaction(
+                                    Convert.ToDouble(reader["Amount"]),
+                                    Convert.ToInt32(reader["AccountID"])
+                                );
+
+                                // add transaction to transactionList
+                                transactionList.Add(transaction);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            // return list containing all transactions
+            return transactionList;
         }
     }
 }
