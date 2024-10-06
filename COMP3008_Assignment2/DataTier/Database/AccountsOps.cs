@@ -112,5 +112,42 @@ namespace DataTier.Database
 
             return false;
         }
+
+        public static List<Account> GetAll()
+        {
+            List<Account> accountList = new List<Account>();
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT * FROM Accounts";
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Account account = new Account();
+                                account.AccountID = Convert.ToInt32(reader["AccountID"]);
+                                account.Balance = Convert.ToDouble(reader["Balance"]);
+                                account.FirstName = reader["FirstName"].ToString();
+                                account.LastName = reader["LastName"].ToString();
+                                
+                                accountList.Add(account);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return accountList;
+        }
     }
 }
