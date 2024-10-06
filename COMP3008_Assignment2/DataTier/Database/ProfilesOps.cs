@@ -87,5 +87,43 @@ namespace DataTier.Database
 
             return false;
         }
+
+        public static bool Update(UserProfile profile)
+        {
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // locate profile based on primary key
+                        command.CommandText = $"UPDATE Profiles SET FirstName = @FirstName, LastName = @LastName, Address = @Address, Phone = @Phone, Password = @Password WHERE Email = @Email";
+
+                        command.Parameters.AddWithValue("@FirstName", profile.FirstName);
+                        command.Parameters.AddWithValue("@LastName", profile.LastName);
+                        command.Parameters.AddWithValue("@Address", profile.Address);
+                        command.Parameters.AddWithValue("@Phone", profile.Phone);
+                        command.Parameters.AddWithValue("@Password", profile.Password);
+
+                        int rowsUpdated = command.ExecuteNonQuery();
+
+                        // ensure record has been updated
+                        if (rowsUpdated > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+                return false;
+            }
+
+            return false;
+        }
     }
 }
