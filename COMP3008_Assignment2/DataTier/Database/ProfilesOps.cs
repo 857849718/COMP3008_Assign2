@@ -54,5 +54,38 @@ namespace DataTier.Database
 
             return false;
         }
+
+        public static bool Delete(string email)
+        {
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // retrieve profile based on primary key
+                        command.CommandText = $"DELETE FROM Profiles WHERE Email = @Email";
+                        command.Parameters.AddWithValue("@Email", email);
+
+                        int rowsDeleted = command.ExecuteNonQuery();
+
+                        // ensure record has been deleted
+                        if (rowsDeleted > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+                return false;
+            }
+
+            return false;
+        }
     }
 }
