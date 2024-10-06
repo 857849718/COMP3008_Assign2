@@ -15,22 +15,26 @@ namespace DataTier.Database
         {
             try
             {
+                // create new SQLite connection
                 using (SQLiteConnection connection = new SQLiteConnection(connectString))
                 {
                     connection.Open();
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
+                        // command parameters
                         command.CommandText = @"
                         INSERT INTO Accounts (Balance, FirstName, Lastname)
                         VALUES (@Balance, @FirstName, @Lastname)";
 
+                        // pararmeters inserted
                         command.Parameters.AddWithValue("@Balance", account.Balance);
                         command.Parameters.AddWithValue("@FirstName", account.FirstName);
                         command.Parameters.AddWithValue("@LastName", account.LastName);
 
                         int rowsInserted = command.ExecuteNonQuery();
-
+                        
+                        // ensure record has been inserted
                         if (rowsInserted > 0)
                         {
                             return true;
@@ -57,11 +61,13 @@ namespace DataTier.Database
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
+                        // retrieve account based on primary key
                         command.CommandText = $"DELETE FROM Accounts WHERE AccountID = @AccountID";
                         command.Parameters.AddWithValue("@AccountID", accountID);
 
                         int rowsDeleted = command.ExecuteNonQuery();
 
+                        // ensure record has been deleted
                         if (rowsDeleted > 0)
                         {
                             return true;
@@ -88,6 +94,7 @@ namespace DataTier.Database
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
+                        // locate account based on primary key
                         command.CommandText = $"UPDATE Accounts SET Balance = @Balance, FirstName = @FirstName, LastName = @LastName WHERE AccountID = @AccountID";
 
                         command.Parameters.AddWithValue("@Balance", account.Balance);
@@ -97,6 +104,7 @@ namespace DataTier.Database
 
                         int rowsUpdated = command.ExecuteNonQuery();
 
+                        // ensure record has been updated
                         if (rowsUpdated > 0)
                         {
                             return true;
@@ -115,6 +123,7 @@ namespace DataTier.Database
 
         public static List<Account> GetAll()
         {
+            // initalize list of accounts
             List<Account> accountList = new List<Account>();
             try
             {
@@ -124,19 +133,21 @@ namespace DataTier.Database
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
+                        // query to retrieve all records from Accounts table
                         command.CommandText = "SELECT * FROM Accounts";
 
                         using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
+                                // create new account with read values
                                 Account account = new Account(
                                     Convert.ToDouble(reader["Balance"]),
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString()
                                 );
-                                
-                                
+
+                                // add account to accountList
                                 accountList.Add(account);
                             }
                         }
@@ -148,11 +159,13 @@ namespace DataTier.Database
                 Console.WriteLine("Error: " + oof.Message);
             }
 
+            // return list containing all accounts
             return accountList;
         }
 
         public static Account GetAccountByID(int accountID)
         {
+            // initialize account
             Account account = null;
             try
             {
@@ -162,6 +175,7 @@ namespace DataTier.Database
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
+                        // query to retrieve account based on primary key
                         command.CommandText = "SELECT * FROM Accounts WHERE AccountID = @AccountID";
                         command.Parameters.AddWithValue("@AccountID", accountID);
 
