@@ -3,21 +3,15 @@
     public class Transaction
     {
         // class fields
-        private double depositAmount;
-        private double withdrawnAmount;
-        private List<string> transactionHistory;
+        private double amount; // deposited/withdrawn amount
 
         // constructor
-        public Transaction(double depositAmount, double withdrawnAmount, List<string> transactionHistory)
+        public Transaction(double amount)
         {
-            this.depositAmount = depositAmount;
-            this.withdrawnAmount = withdrawnAmount;
-            this.transactionHistory = transactionHistory;
+            this.amount = amount;
         }
 
         // accessors/mutators
-        public double DepositAmount { get; set; }
-        public double WithdrawnAmount { get; set; }
-        public List<string> TransactionHistory { get; set; }
+        public double Amount { get; set; }
      }
 }
