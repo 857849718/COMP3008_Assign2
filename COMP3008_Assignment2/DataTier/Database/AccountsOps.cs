@@ -1,5 +1,7 @@
 ﻿using DataTier.Models;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.SQLite;
+using System.Security.Principal;
 
 namespace DataTier.Database
 {
@@ -30,6 +32,36 @@ namespace DataTier.Database
                         int rowsInserted = command.ExecuteNonQuery();
 
                         if (rowsInserted > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return false;
+        }
+
+        public static bool Delete(int accountID)
+        {
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = $"DELETE FROM Accounts WHERE AccountID = @AccountID";
+                        command.Parameters.AddWithValue("@AccountID", accountID);
+
+                        int rowsDeleted = command.ExecuteNonQuery();
+
+                        if (rowsDeleted > 0)
                         {
                             return true;
                         }
