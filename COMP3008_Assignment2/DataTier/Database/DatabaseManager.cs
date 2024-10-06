@@ -35,8 +35,7 @@ namespace DataTier.Database
                          */
                         command.CommandText = @"CREATE TABLE Transactions (
                             TransactionID INTEGER AUTOINCREMENT,
-                            DepositAmount REAL,
-                            WithdrawnAmount REAL,
+                            Amount REAL,
                             AccountID INTEGER,
                             PRIMARY KEY (TransactionID),
                             FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
