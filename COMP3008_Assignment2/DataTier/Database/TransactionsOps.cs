@@ -28,7 +28,7 @@ namespace DataTier.Database
 
                         // pararmeters inserted
                         command.Parameters.AddWithValue("@Transactions", transaction.Amount);
-                        command.Parameters.AddWithValue("@FirstName", account.FirstName);
+                        command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
 
                         int rowsInserted = command.ExecuteNonQuery();
 
