@@ -125,5 +125,89 @@ namespace DataTier.Database
 
             return false;
         }
+
+        public static List<UserProfile> GetAll()
+        {
+            // initalize list of profiles
+            List<UserProfile> profileList = new List<UserProfile>();
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // query to retrieve all records from Profiles table
+                        command.CommandText = "SELECT * FROM Profiles";
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // create new profile with read values
+                                UserProfile profile = new UserProfile(
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString(),
+                                    reader["Email"].ToString(),
+                                    reader["Address"].ToString(),
+                                    Convert.ToInt32(reader["Phone"]),
+                                    reader["Password"].ToString(),
+                                    Convert.ToInt32(reader["AccountID"])
+                                );
+
+                                // add profile to profilesList
+                                profileList.Add(profile);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            // return list containing all profiles
+            return profileList;
+        }
+
+        public static UserProfile GetProfileByEmail(string email)
+        {
+            // initialize profile
+            Account account = null;
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // query to retrieve account based on primary key
+                        command.CommandText = "SELECT * FROM Accounts WHERE AccountID = @AccountID";
+                        command.Parameters.AddWithValue("@AccountID", accountID);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                account = new Account(
+                                    Convert.ToDouble(reader["Balance"]),
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString()
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return account;
+        }
     }
 }
