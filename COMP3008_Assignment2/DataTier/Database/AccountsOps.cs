@@ -131,7 +131,6 @@ namespace DataTier.Database
                             while (reader.Read())
                             {
                                 Account account = new Account();
-                                account.AccountID = Convert.ToInt32(reader["AccountID"]);
                                 account.Balance = Convert.ToDouble(reader["Balance"]);
                                 account.FirstName = reader["FirstName"].ToString();
                                 account.LastName = reader["LastName"].ToString();

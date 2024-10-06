@@ -9,9 +9,8 @@
         private string lastName;
 
         // constructor
-        public Account(int accountID, double balance, string firstName, string lastName)
+        public Account(double balance, string firstName, string lastName)
         {
-            this.accountID = accountID;
             this.balance = balance;
             this.firstName = firstName;
             this.lastName = lastName;
