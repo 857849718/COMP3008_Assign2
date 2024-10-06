@@ -175,7 +175,7 @@ namespace DataTier.Database
         public static UserProfile GetProfileByEmail(string email)
         {
             // initialize profile
-            Account account = null;
+            UserProfile profile = null;
             try
             {
                 using (SQLiteConnection connection = new SQLiteConnection(connectString))
@@ -184,18 +184,22 @@ namespace DataTier.Database
 
                     using (SQLiteCommand command = connection.CreateCommand())
                     {
-                        // query to retrieve account based on primary key
-                        command.CommandText = "SELECT * FROM Accounts WHERE AccountID = @AccountID";
-                        command.Parameters.AddWithValue("@AccountID", accountID);
+                        // query to retrieve profile based on primary key
+                        command.CommandText = "SELECT * FROM Profiles WHERE Email = @Email";
+                        command.Parameters.AddWithValue("@Email", email);
 
                         using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                account = new Account(
-                                    Convert.ToDouble(reader["Balance"]),
+                                profile = new UserProfile(
                                     reader["FirstName"].ToString(),
-                                    reader["LastName"].ToString()
+                                    reader["LastName"].ToString(),
+                                    reader["Email"].ToString(),
+                                    reader["Address"].ToString(),
+                                    Convert.ToInt32(reader["Phone"]),
+                                    reader["Password"].ToString(),
+                                    Convert.ToInt32(reader["AccountID"])
                                 );
                             }
                         }
@@ -207,7 +211,7 @@ namespace DataTier.Database
                 Console.WriteLine("Error: " + oof.Message);
             }
 
-            return account;
+            return profile;
         }
     }
 }
