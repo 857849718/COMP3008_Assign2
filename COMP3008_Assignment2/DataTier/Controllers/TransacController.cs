@@ -18,7 +18,7 @@ namespace DataTier.Controllers
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
             Account accountNew = accountOld; // used to performing change
-            double startamount = accountOld.Balance;
+            double startamount = accountOld.balance;
             double endamount;
             Transaction transaction = new Transaction(amount, accNo);
 
@@ -29,11 +29,11 @@ namespace DataTier.Controllers
             }
 
             // adding amount into account balance and updating entry in DB
-            accountNew.Balance += amount;
+            accountNew.balance += amount;
             AccountsOps.Update(accountNew);
 
             // retrieving updated account balance
-            endamount = AccountsOps.GetAccountByID(accNo).Balance;
+            endamount = AccountsOps.GetAccountByID(accNo).balance;
 
             // verifying
             if (!TransVeri(startamount, amount, endamount))
@@ -56,7 +56,7 @@ namespace DataTier.Controllers
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
             Account accountNew = accountOld; // used to performing change
-            double startamount = accountOld.Balance;
+            double startamount = accountOld.balance;
             double endamount;
             Transaction transaction = new Transaction((amount * -1), accNo);
 
@@ -67,11 +67,11 @@ namespace DataTier.Controllers
             }
 
             // adding amount into account balance and updating entry in DB
-            accountNew.Balance -= amount;
+            accountNew.balance -= amount;
             AccountsOps.Update(accountNew);
 
             // retrieving updated account balance
-            endamount = AccountsOps.GetAccountByID(accNo).Balance;
+            endamount = AccountsOps.GetAccountByID(accNo).balance;
 
             // verifying
             if (!TransVeri(startamount, amount, endamount))

@@ -28,9 +28,9 @@ namespace DataTier.Database
                         VALUES (@Balance, @FirstName, @Lastname)";
 
                         // pararmeters inserted
-                        command.Parameters.AddWithValue("@Balance", account.Balance);
-                        command.Parameters.AddWithValue("@FirstName", account.FirstName);
-                        command.Parameters.AddWithValue("@LastName", account.LastName);
+                        command.Parameters.AddWithValue("@Balance", account.balance);
+                        command.Parameters.AddWithValue("@FirstName", account.firstName);
+                        command.Parameters.AddWithValue("@LastName", account.lastName);
 
                         int rowsInserted = command.ExecuteNonQuery();
                         
@@ -97,10 +97,10 @@ namespace DataTier.Database
                         // locate account based on primary key
                         command.CommandText = $"UPDATE Accounts SET Balance = @Balance, FirstName = @FirstName, LastName = @LastName WHERE AccountID = @AccountID";
 
-                        command.Parameters.AddWithValue("@Balance", account.Balance);
-                        command.Parameters.AddWithValue("@FirstName", account.FirstName);
-                        command.Parameters.AddWithValue("@LastName", account.LastName);
-                        command.Parameters.AddWithValue("@AccountID", account.AccountID);
+                        command.Parameters.AddWithValue("@Balance", account.balance);
+                        command.Parameters.AddWithValue("@FirstName", account.firstName);
+                        command.Parameters.AddWithValue("@LastName", account.lastName);
+                        command.Parameters.AddWithValue("@AccountID", account.accountID);
 
                         int rowsUpdated = command.ExecuteNonQuery();
 

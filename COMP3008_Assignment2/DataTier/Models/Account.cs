@@ -3,10 +3,10 @@
     public class Account
     {
         // class fields
-        private int accountID;
-        private double balance;
-        private string firstName;
-        private string lastName;
+        public int accountID { get; set; }
+        public double balance { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
 
         // constructor
         public Account(double balance, string firstName, string lastName)
@@ -15,11 +15,5 @@
             this.firstName = firstName;
             this.lastName = lastName;
         }
-
-        // accessors/mutators
-        public int AccountID { get; set; }
-        public double Balance { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     }
 }

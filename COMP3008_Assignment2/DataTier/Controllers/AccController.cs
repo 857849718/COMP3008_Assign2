@@ -10,6 +10,10 @@ namespace DataTier.Controllers
     public class AccController : ControllerBase
     {
         //private readonly DatabaseManager DBManger;
+        public AccController()
+        {
+            DatabaseManager.CreateTables();
+        }
 
         //create new bank acc
         [HttpPost]
@@ -43,6 +47,7 @@ namespace DataTier.Controllers
             }
             return BadRequest("Account detail update failed");
         }
+
         //delete acc
         [HttpDelete]
         public IActionResult DeleteAcc(int accNo)
@@ -53,6 +58,5 @@ namespace DataTier.Controllers
             }
             return BadRequest("Account failed to delete");
         }
-
     }
 }
