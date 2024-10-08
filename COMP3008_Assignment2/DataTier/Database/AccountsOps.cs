@@ -24,8 +24,8 @@ namespace DataTier.Database
                     {
                         // command parameters
                         command.CommandText = @"
-                        INSERT INTO Accounts (Balance, FirstName, Lastname)
-                        VALUES (@Balance, @FirstName, @Lastname)";
+                        INSERT INTO Accounts (Balance, FirstName, LastName)
+                        VALUES (@Balance, @FirstName, @LastName)";
 
                         // pararmeters inserted
                         command.Parameters.AddWithValue("@Balance", account.Balance);
@@ -37,6 +37,7 @@ namespace DataTier.Database
                         // ensure record has been inserted
                         if (rowsInserted > 0)
                         {
+                            Console.WriteLine("true");
                             return true;
                         }
                     }

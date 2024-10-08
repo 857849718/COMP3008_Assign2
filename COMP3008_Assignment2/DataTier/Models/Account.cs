@@ -16,6 +16,7 @@
             this.lastName = lastName;
         }
 
+        // parameterless constructor
         public Account() { }
 
         // accessors/mutators

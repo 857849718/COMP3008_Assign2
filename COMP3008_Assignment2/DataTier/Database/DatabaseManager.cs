@@ -75,17 +75,13 @@ namespace DataTier.Database
         {
             if (CreateTables())
             {
-                Account account = new Account
-                (
-                    balance: 5150,
-                    firstName: "Ben",
-                    lastName: "Tom"
-                );
+                Account account = new Account();
+                account.Balance = 5150;
+                account.FirstName = "Ben";
+                account.LastName = "Tom";
                 AccountsOps.Insert(account);
 
                 Console.WriteLine("Balance for account: " + account.Balance);
-
-                Account acc = new Account(null, null, null);
             }
         }
     }
