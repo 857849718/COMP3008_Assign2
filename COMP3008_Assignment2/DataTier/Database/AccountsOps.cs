@@ -180,6 +180,7 @@ namespace DataTier.Database
                         // query to retrieve account based on primary key
                         command.CommandText = "SELECT * FROM Accounts WHERE AccountID = @AccountID";
                         command.Parameters.AddWithValue("@AccountID", accountID);
+                        Console.WriteLine("accountID: " + accountID);
 
                         using (SQLiteDataReader reader = command.ExecuteReader())
                         {

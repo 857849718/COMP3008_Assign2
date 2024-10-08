@@ -17,15 +17,17 @@ namespace DataTier.Controllers
         {
             if (AccountsOps.Insert(acc))
             {
-                return Ok("Account Successfully created");
+                return Ok("Account successfully created");
             }
             return BadRequest("Account creation failed");
         }
 
         //retrieve acc details by acc no.
+        [Route("get/{accNo}")]
         [HttpGet] //TODO: probably need to be post
         public IActionResult GetAccByAccNo(int accNo)
         {
+            Console.WriteLine("accNo: "+accNo);
             Account result = AccountsOps.GetAccountByID(accNo);
             if(result != null)
             {
