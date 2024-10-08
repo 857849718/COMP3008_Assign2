@@ -31,7 +31,7 @@ namespace DataTier.Database
                         command.Parameters.AddWithValue("@Balance", account.Balance);
                         command.Parameters.AddWithValue("@FirstName", account.FirstName);
                         command.Parameters.AddWithValue("@LastName", account.LastName);
-                        Console.WriteLine("Balance: " + account.Balance + "\nFirstName: " + account.FirstName + "\nLastName: " + account.LastName);
+                        //Console.WriteLine("Balance: " + account.Balance + "\nFirstName: " + account.FirstName + "\nLastName: " + account.LastName);
 
                         int rowsInserted = command.ExecuteNonQuery();
                         
@@ -191,6 +191,8 @@ namespace DataTier.Database
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString()
                                 );
+
+                                Console.WriteLine(account.ToString());
                             }
                         }
                     }
@@ -202,6 +204,36 @@ namespace DataTier.Database
             }
 
             return account;
+        }
+
+        public static int GetAccountID()
+        {
+            int accountID = -2;
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT AccountID FROM Accounts ORDER BY AccountID DESC LIMIT 1";
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                accountID = Convert.ToInt32(reader["AccountID"]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+            return accountID;
         }
     }
 }
