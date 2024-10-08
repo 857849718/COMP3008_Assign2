@@ -16,6 +16,8 @@
             this.lastName = lastName;
         }
 
+        public Account() { }
+
         // accessors/mutators
         public int AccountID { get; set; }
         public double Balance { get; set; }

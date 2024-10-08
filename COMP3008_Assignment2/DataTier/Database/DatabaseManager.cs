@@ -82,6 +82,10 @@ namespace DataTier.Database
                     lastName: "Tom"
                 );
                 AccountsOps.Insert(account);
+
+                Console.WriteLine("Balance for account: " + account.Balance);
+
+                Account acc = new Account(null, null, null);
             }
         }
     }
