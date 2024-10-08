@@ -19,7 +19,7 @@ namespace DataTier.Database
                         /*  Accounts table;
                          *  AccountID will automatically increment
                          */
-                        command.CommandText = @"CREATE TABLE Accounts (
+                        command.CommandText = @"CREATE TABLE IF NOT EXISTS Accounts (
                             AccountID INTEGER AUTOINCREMENT, 
                             Balance REAL,
                             FirstName TEXT,
@@ -33,7 +33,7 @@ namespace DataTier.Database
                          *  TransactionID will automatically increment;
                          *  References AccountID as a foreign key
                          */
-                        command.CommandText = @"CREATE TABLE Transactions (
+                        command.CommandText = @"CREATE TABLE IF NOT EXISTS Transactions (
                             TransactionID INTEGER AUTOINCREMENT,
                             Amount REAL,
                             AccountID INTEGER,
@@ -47,7 +47,7 @@ namespace DataTier.Database
                          *  Uses Email as a primary key (no two emails should be the same);
                          *  References AccountID as a foreign key
                          */
-                        command.CommandText = @"CREATE TABLE Profiles (
+                        command.CommandText = @"CREATE TABLE IF NOT EXISTS Profiles (
                             FirstName TEXT,
                             LastName TEXT,
                             Email TEXT,
