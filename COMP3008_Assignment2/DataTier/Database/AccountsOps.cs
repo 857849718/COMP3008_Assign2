@@ -31,6 +31,7 @@ namespace DataTier.Database
                         command.Parameters.AddWithValue("@Balance", account.Balance);
                         command.Parameters.AddWithValue("@FirstName", account.FirstName);
                         command.Parameters.AddWithValue("@LastName", account.LastName);
+                        Console.WriteLine("Balance: " + account.Balance + "\nFirstName: " + account.FirstName + "\nLastName: " + account.LastName);
 
                         int rowsInserted = command.ExecuteNonQuery();
                         
