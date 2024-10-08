@@ -21,11 +21,10 @@ namespace DataTier.Database
                          *  AccountID will automatically increment
                          */
                         command.CommandText = @"CREATE TABLE IF NOT EXISTS Accounts (
-                            AccountID INTEGER AUTOINCREMENT, 
+                            AccountID INTEGER PRIMARY KEY AUTOINCREMENT, 
                             Balance REAL,
                             FirstName TEXT,
-                            LastName TEXT,
-                            PRIMARY KEY (AccountID)
+                            LastName TEXT
                         )";
 
                         command.ExecuteNonQuery();
@@ -35,10 +34,9 @@ namespace DataTier.Database
                          *  References AccountID as a foreign key
                          */
                         command.CommandText = @"CREATE TABLE IF NOT EXISTS Transactions (
-                            TransactionID INTEGER AUTOINCREMENT,
+                            TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
                             Amount REAL,
                             AccountID INTEGER,
-                            PRIMARY KEY (TransactionID),
                             FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
                         )";
 
@@ -51,12 +49,11 @@ namespace DataTier.Database
                         command.CommandText = @"CREATE TABLE IF NOT EXISTS Profiles (
                             FirstName TEXT,
                             LastName TEXT,
-                            Email TEXT,
+                            Email TEXT PRIMARY KEY,
                             Address TEXT,
                             Phone INTEGER,
                             Password TEXT,
                             AccountID INTEGER,
-                            PRIMARY KEY (Email),
                             FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
                         )";
 
