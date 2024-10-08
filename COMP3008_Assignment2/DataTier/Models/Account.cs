@@ -24,5 +24,15 @@
         public double Balance { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public override string ToString()
+        {
+            string accountDetails = "Account ID: " + accountID +
+                "\n Balance: " + balance +
+                "\n First Name: " + firstName +
+                "\n Last Name: " + lastName;
+
+            return accountDetails;
+        }
     }
 }
