@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using DataTier.Models;
+using System.Data.SQLite;
 using System.Linq.Expressions;
 
 namespace DataTier.Database
@@ -71,6 +72,20 @@ namespace DataTier.Database
                 Console.WriteLine(oof.Message);
             }
             return false;
+        }
+
+        public void InitializeAccounts()
+        {
+            if (CreateTables())
+            {
+                Account account = new Account
+                (
+                    balance: 5150,
+                    firstName: "Ben",
+                    lastName: "Tom"
+                );
+                
+            }
         }
     }
 }
