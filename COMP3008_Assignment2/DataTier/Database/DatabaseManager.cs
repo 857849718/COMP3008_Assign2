@@ -74,7 +74,7 @@ namespace DataTier.Database
             return false;
         }
 
-        public void InitializeAccounts()
+        public static void InitializeAccounts()
         {
             if (CreateTables())
             {
@@ -84,7 +84,7 @@ namespace DataTier.Database
                     firstName: "Ben",
                     lastName: "Tom"
                 );
-                
+                AccountsOps.Insert(account);
             }
         }
     }
