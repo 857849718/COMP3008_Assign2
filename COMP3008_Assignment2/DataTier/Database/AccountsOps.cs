@@ -49,7 +49,7 @@ namespace DataTier.Database
             }
             catch (Exception oof)
             {
-                Console.WriteLine("Error: " + oof.Message);
+                Console.WriteLine("Error (AccountOps.Insert): " + oof.Message);
                 return false;
             }
 
@@ -236,7 +236,7 @@ namespace DataTier.Database
             }
             catch (Exception oof)
             {
-                Console.WriteLine("Error: " + oof.Message);
+                Console.WriteLine("Error (AccountOps.GetAccountID): " + oof.Message);
             }
             return accountID;
         }

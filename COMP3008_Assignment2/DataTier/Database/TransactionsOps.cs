@@ -28,7 +28,7 @@ namespace DataTier.Database
                         VALUES (@Amount, @AccountID)";
 
                         // pararmeters inserted
-                        command.Parameters.AddWithValue("@Transactions", transaction.Amount);
+                        command.Parameters.AddWithValue("@Amount", transaction.Amount);
                         command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
 
                         int rowsInserted = command.ExecuteNonQuery();
@@ -43,7 +43,7 @@ namespace DataTier.Database
             }
             catch (Exception oof)
             {
-                Console.WriteLine("Error: " + oof.Message);
+                Console.WriteLine("Error (TransactionOps.Insert): " + oof.Message);
                 return false;
             }
 
