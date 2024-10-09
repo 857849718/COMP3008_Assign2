@@ -1,6 +1,9 @@
 using DataTier.Database;
+using DataTier.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+DatabaseManager.CreateTables();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

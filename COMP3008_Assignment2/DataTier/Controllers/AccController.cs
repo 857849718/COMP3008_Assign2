@@ -29,6 +29,7 @@ namespace DataTier.Controllers
         {
             Console.WriteLine("accNo: "+accNo);
             Account result = AccountsOps.GetAccountByID(accNo);
+            Console.WriteLine(result.ToString());
             if(result != null)
             {
                 return Ok(result);

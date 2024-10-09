@@ -20,10 +20,10 @@
         public Account() { }
 
         // accessors/mutators
-        public int AccountID { get; set; }
-        public double Balance { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int AccountID { get { return accountID; } set { accountID = value;  } }
+        public double Balance { get { return balance; } set { balance = value; } }
+        public string FirstName { get { return firstName; } set { firstName = value; } }
+        public string LastName { get { return lastName; } set { lastName = value; } }
 
         public override string ToString()
         {

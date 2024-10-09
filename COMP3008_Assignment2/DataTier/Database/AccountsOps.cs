@@ -39,6 +39,9 @@ namespace DataTier.Database
                         if (rowsInserted > 0)
                         {
                             Console.WriteLine("true");
+                            Console.WriteLine(GetAccountID());
+                            account.AccountID = GetAccountID();
+                            Console.WriteLine(account.ToString());
                             return true;
                         }
                     }
@@ -151,6 +154,8 @@ namespace DataTier.Database
 
                                 // add account to accountList
                                 accountList.Add(account);
+
+                                Console.WriteLine(account.ToString());
                             }
                         }
                     }
