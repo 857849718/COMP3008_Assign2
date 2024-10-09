@@ -14,7 +14,7 @@
         }
 
         // accessors/mutators
-        public double Amount { get; set; }
-        public int AccountID { get; set; }
+        public double Amount { get { return amount; } set { amount = value; } }
+        public int AccountID { get { return accountID; } set { accountID = value; } }
      }
 }
