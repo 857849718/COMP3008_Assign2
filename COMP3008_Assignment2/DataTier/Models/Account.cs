@@ -16,6 +16,15 @@
             this.lastName = lastName;
         }
 
+        // constructor with accountID (for reading)
+        public Account(int accountID, double balance, string firstName, string lastName)
+        {
+            this.accountID = accountID;
+            this.balance = balance;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
         // parameterless constructor
         public Account() { }
 

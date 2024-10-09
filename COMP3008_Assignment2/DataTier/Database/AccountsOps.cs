@@ -196,8 +196,6 @@ namespace DataTier.Database
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString()
                                 );
-
-                                Console.WriteLine(account.ToString());
                             }
                         }
                     }
