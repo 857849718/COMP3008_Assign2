@@ -1,6 +1,6 @@
 ﻿namespace DataTier.Models.DataSeeding
 {
-    public class EmailPasswordList
+    public class InformationList
     {
         public static List<String> Emails()
         {
@@ -30,6 +30,22 @@
             passwords.Add("name_of_first_pet");
             passwords.Add("bozo6655");
             return passwords;
+        }
+
+        public static List<String> Addresses()
+        {
+            List<String> addresses = new List<String>();
+
+            addresses.Add("6 Rupert Avenue");
+            addresses.Add("100 Dexashire Road");
+            addresses.Add("36 duPont Street");
+            addresses.Add("82 Elm Street");
+            addresses.Add("403 Juniper Avenue");
+            addresses.Add("2 Seventh Road");
+            addresses.Add("1002 Washington Street");
+            addresses.Add("9 Grovewood Road");
+
+            return addresses;
         }
     }
 }
