@@ -147,6 +147,7 @@ namespace DataTier.Database
                             {
                                 // create new account with read values
                                 Account account = new Account(
+                                    Convert.ToInt32(reader["AccountID"]),
                                     Convert.ToDouble(reader["Balance"]),
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString()
@@ -192,6 +193,7 @@ namespace DataTier.Database
                             if (reader.Read())
                             {
                                 account = new Account(
+                                    Convert.ToInt32(reader["AccountID"]),
                                     Convert.ToDouble(reader["Balance"]),
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString()
@@ -224,7 +226,7 @@ namespace DataTier.Database
 
                         using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
                                 accountID = Convert.ToInt32(reader["AccountID"]);
                             }
