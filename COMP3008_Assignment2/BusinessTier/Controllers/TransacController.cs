@@ -1,7 +1,7 @@
-﻿using DataTier.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.Entity;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace BusinessTier.Controllers
 {
@@ -9,47 +9,38 @@ namespace BusinessTier.Controllers
     [ApiController]
     public class TransacController : ControllerBase
     {
-        //deposite
+        private readonly RestClient RestClient = new RestClient("http://localhost:5185");
+
+        // Deposit
         [HttpPatch]
-        public IActionResult Deposite(Account acc, float amount)
+        [Route("deposit/{accNo}/{amount}")]
+        public IActionResult Deposit(int accNo, double amount)
         {
-            
-            if (acc == null || amount <= 0)
-            {
-                return BadRequest("Invalid input");
-                
-            }
-            if (!/*TODO: DBM function call here*/ && )
-            {
-                return BadRequest("Transaction failed");
-                
-            }
-            return Ok("Transaction successful");
-        }
-        //withdrawal
-        [HttpPatch]
-        public IActionResult Withdraw(Account acc, float amount)
-        {
-            if (acc == null || amount <= 0)
-            {
-                return BadRequest("Invalid input");
-            }
-            if (/*TODO: DBM function call here*/)
+            var request = new RestRequest($"/api/Transac/deposit/{accNo}/{amount}", Method.Patch);
+            RestResponse response = RestClient.Execute(request);
+
+            if (response.IsSuccessful)
             {
                 return Ok("Transaction successful");
             }
-            return BadRequest("Transaction failed");
+
+            return StatusCode((int)response.StatusCode, response.Content);
         }
 
-        //verifying
-        private bool TransVeri(float startamount, float amount, float endamount)
+        // Withdraw
+        [HttpPatch]
+        [Route("withdraw/{accNo}/{amount}")]
+        public IActionResult Withdraw(int accNo, double amount)
         {
-            return (Math.Abs(startamount - endamount) == amount);
-        }
-        //logging?
-        private void Log(string log)
-        {
+            var request = new RestRequest($"/api/Transac/withdraw/{accNo}/{amount}", Method.Patch);
+            RestResponse response = RestClient.Execute(request);
 
+            if (response.IsSuccessful)
+            {
+                return Ok("Transaction successful");
+            }
+
+            return StatusCode((int)response.StatusCode, response.Content);
         }
     }
 }
