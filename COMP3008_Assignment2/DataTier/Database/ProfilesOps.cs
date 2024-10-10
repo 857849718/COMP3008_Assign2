@@ -106,6 +106,7 @@ namespace DataTier.Database
                         command.Parameters.AddWithValue("@Address", profile.Address);
                         command.Parameters.AddWithValue("@Phone", profile.Phone);
                         command.Parameters.AddWithValue("@Password", profile.Password);
+                        command.Parameters.AddWithValue("@Email", profile.Email);
 
                         int rowsUpdated = command.ExecuteNonQuery();
 
