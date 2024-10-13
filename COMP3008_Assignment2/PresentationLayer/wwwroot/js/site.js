@@ -11,14 +11,13 @@ function loadScript(scriptSRC) {
 
 function loadView(view) {
     var apiUrl;
+    if (view == 'adminDashboard') {
+        apiUrl = 'api/admin/ShowAdminDashboard';
+        console.log("Loading admin view");
+    }
     if (view == 'loginForm' || view == 'userDashBoard') {
         apiUrl = '/api/user/ShowLoginForm';
         console.log("loading login view");
-    }
-    if (view == 'adminDashboard') {
-        apiUrl = 'api/admin/ShowAdminDashboard';
-        loadScript('/js/adminDashboard.js');
-        console.log("Loading admin view");
     }
         
     //if (view === 'userDashBoard') {
