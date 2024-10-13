@@ -6,13 +6,12 @@
     string email = ViewBag.adminEmail;
     long phone = ViewBag.adminPhone;
 }
-
 <div id="adminInfo">
     <h1>Welcome, @name!</h1>
     <h3>Email: @email</h3>
     <h3>Phone: @phone</h3>
 </div>
 <div id="adminButtons">
-    <input id="viewUsers" type="button" value="View User Accounts" onclick="test()" />
-    <input id="viewTransactions" type="button" value="View Transactions" />
+    <input id="viewUsers" type="button" value="View User Accounts" onclick="loadAll()" />
+    <input id="viewTransactions" type="button" value="View Transactions" onclick="loadTransactions()"/>
 </div>
