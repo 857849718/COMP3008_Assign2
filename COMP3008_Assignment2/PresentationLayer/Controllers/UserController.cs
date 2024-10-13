@@ -58,10 +58,15 @@ namespace PresentationLayer.Controllers
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
 
+            if (newProfile != null)
+            {
+                Console.WriteLine(newProfile.ToString());
+            }
+
             // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist.", adminFlag = false };
 
-            if (newProfile.Password == null)
+            if (newProfile == null)
             {
                 auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
                 return Json(auth);

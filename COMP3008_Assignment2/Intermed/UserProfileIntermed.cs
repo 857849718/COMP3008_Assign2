@@ -24,5 +24,10 @@ namespace Intermed
         public string Password { get { return password; } set { password = value; } }
         public int AccountID { get { return accountID; } set { accountID = value; } }
 
+        public override string ToString()
+        {
+            return "First Name: " + FirstName + "\nLast Name: " + LastName + "\nEmail: " + Email + "\nAddress: " + Address + "\nPhone: " + Phone + "\nPassword: " + Password + "\nAccountID: " + AccountID;
+        }
+
     }
 }
