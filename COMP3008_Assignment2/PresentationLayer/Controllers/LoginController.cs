@@ -62,24 +62,24 @@ namespace PresentationLayer.Controllers
             UserProfileIntermed newProfile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
 
             // Console.WriteLine(email);
-            var auth = new { auth = false, msg = "Account does not exist." };
+            var auth = new { auth = false, msg = "Account does not exist.", adminFlag = false };
 
             if (newProfile.Password == null)
             {
-                auth = new { auth = false, msg = "Error: Invalid credentials!" };
+                auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
                 return Json(auth);
             }
 
             if (password.Trim() != newProfile.Password)
             {
-                auth = new { auth = false, msg = "Error: Invalid credentials!" };
+                auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
                 return Json(auth);
             }
 
             // check if email is logged in
             if (sessions.ContainsValue(email))
             {
-                auth = new { auth = false, msg = "This account is currently in use." };
+                auth = new { auth = false, msg = "This account is currently in use.", adminFlag = false };
                 return Json(auth);
             }
 
@@ -95,7 +95,14 @@ namespace PresentationLayer.Controllers
 
                 //var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
                 Response.Cookies.Append("SessionID", sessionID.ToString());
-                auth = new { auth = true, msg = "Log in successful." };
+
+                if (email.Equals("admin@bankingsolutions.com") && password.Trim().Equals(newProfile.Password))
+                {
+                    auth = new { auth = true, msg = "Log in successful.", adminFlag = true };
+                    return Json(auth);
+                }
+
+                auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
             }
 
             return Json(auth);

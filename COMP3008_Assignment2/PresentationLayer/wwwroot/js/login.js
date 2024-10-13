@@ -23,8 +23,12 @@
         })
         .then(data => {
             if (data.auth) {
-                localStorage.setItem("email", email);
-                loadView('userDashBoard');
+                if (data.adminFlag) {
+                    loadView('adminDashboard')
+                }
+                else {
+                    loadView('userDashBoard');
+                }
             }
             else {
                 alert(data.msg);
