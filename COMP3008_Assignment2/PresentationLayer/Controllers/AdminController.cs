@@ -15,16 +15,20 @@ namespace PresentationLayer.Controllers
         {
             Console.WriteLine("Showing admin dashboard");
             UserProfileIntermed adminProfile = GetProfileByEmail("admin@bankingsolutions.com");
-            ViewBag.adminName = adminProfile.FirstName;
-            ViewBag.adminEmail = adminProfile.Email;
-            ViewBag.adminPhone = adminProfile.Phone; 
-            return PartialView("AdminDashboard");
+            if (adminProfile != null)
+            {
+                ViewBag.adminName = adminProfile.FirstName;
+                ViewBag.adminEmail = adminProfile.Email;
+                ViewBag.adminPhone = adminProfile.Phone;
+                return PartialView("AdminDashboard");
+            }
+            return NotFound();
         }
 
         public UserProfileIntermed GetProfileByEmail(string email)
         {
             RestClient restClient = new RestClient("http://localhost:5186");
-            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
+            var request = new RestRequest($"/api/user/{email}", Method.Get);
             RestResponse response = restClient.Execute(request);
 
             if (response.IsSuccessful)
