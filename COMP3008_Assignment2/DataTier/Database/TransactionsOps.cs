@@ -24,12 +24,14 @@ namespace DataTier.Database
                     {
                         // command parameters
                         command.CommandText = @"
-                        INSERT INTO Transactions (Amount, AccountID)
-                        VALUES (@Amount, @AccountID)";
+                        INSERT INTO Transactions (Amount, AccountID, Description, Time)
+                        VALUES (@Amount, @AccountID, @Description, @Time)";
 
                         // pararmeters inserted
                         command.Parameters.AddWithValue("@Amount", transaction.Amount);
                         command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
+                        command.Parameters.AddWithValue("@Description", transaction.Description);
+                        command.Parameters.AddWithValue("@Time", transaction.Time);
 
                         int rowsInserted = command.ExecuteNonQuery();
 
@@ -72,7 +74,9 @@ namespace DataTier.Database
                                 // create new transaction with read values
                                 Transaction transaction = new Transaction(
                                     Convert.ToDouble(reader["Amount"]),
-                                    Convert.ToInt32(reader["AccountID"])
+                                    Convert.ToInt32(reader["AccountID"]),
+                                    reader["Description"].ToString(),
+                                    reader["Time"].ToString()
                                 );
 
                                 // add transaction to transactionList
@@ -114,7 +118,9 @@ namespace DataTier.Database
                                 // create new transaction with read values
                                 Transaction transaction = new Transaction(
                                     Convert.ToDouble(reader["Amount"]),
-                                    Convert.ToInt32(reader["AccountID"])
+                                    Convert.ToInt32(reader["AccountID"]),
+                                    reader["Description"].ToString(),
+                                    reader["Time"].ToString()
                                 );
 
                                 // add transaction to transactionList
