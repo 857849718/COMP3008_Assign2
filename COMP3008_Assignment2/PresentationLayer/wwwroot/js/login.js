@@ -14,7 +14,7 @@
         body: JSON.stringify(data)
     };
 
-    fetch('/api/login/Login', request)
+    fetch('/api/user/Login', request)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response not ok');

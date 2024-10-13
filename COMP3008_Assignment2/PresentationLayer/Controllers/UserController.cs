@@ -8,7 +8,7 @@ using PresentationLayer.Models;
 namespace PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class UserController : Controller
     {
         private readonly RestClient RestClient = new RestClient("http://localhost:5186");
         private Random random = new Random();
@@ -37,7 +37,7 @@ namespace PresentationLayer.Controllers
                     ViewBag.fName = account.FirstName;
                     ViewBag.lName = account.LastName;
                     ViewBag.email = userProfile.Email;
-                    ViewBag.balance = account.Balance;
+                    ViewBag.balance = account.Balance.ToString();
 
                     return PartialView("UserDashBoard");
                 }
@@ -54,10 +54,7 @@ namespace PresentationLayer.Controllers
             string password = profile.Password;
 
             // get user account info
-            var client = new RestClient("http://localhost:5186");
-            var request = new RestRequest($"/api/user/get/{email}");
-            RestResponse response = client.Get(request);
-            UserProfileIntermed newProfile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+            UserProfileIntermed newProfile = GetProfileByEmail(email);
 
             // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist." };
@@ -77,7 +74,7 @@ namespace PresentationLayer.Controllers
 
             // generate response
             
-            if (response.IsSuccessful)
+            if (newProfile !=null)
             {
                 profileS = ProfileSingleton.GetInstance();
                 profileS.Email = email;
@@ -113,7 +110,7 @@ namespace PresentationLayer.Controllers
         // private method: get user profile
         public UserProfileIntermed GetProfileByEmail(string email)
         {
-            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
+            var request = new RestRequest($"/api/user/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
             if (response.IsSuccessful)
