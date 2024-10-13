@@ -48,6 +48,7 @@ namespace PresentationLayer.Controllers
         }
 
         // show update user info form
+        [HttpGet("ShowUserInfoUpdateForm")]
         public IActionResult ShowUserInfoUpdateForm()
         {
             // get account info
