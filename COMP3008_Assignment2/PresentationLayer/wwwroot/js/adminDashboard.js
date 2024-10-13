@@ -14,6 +14,30 @@ function loadAll() {
         })
         .then(data => {
             const userTable = document.createElement("table");
+
+            const fNameCol = document.createElement("th");
+            fNameCol.innerText = "First Name";
+            const lNameCol = document.createElement("th");
+            lNameCol.innerText = "Last Name";
+            const emailCol = document.createElement("th");
+            emailCol.innerText = "Email";
+            const addressCol = document.createElement("th");
+            addressCol.innerText = "Address";
+            const phoneCol = document.createElement("th");
+            phoneCol.innerText = "Phone";
+            const passwordCol = document.createElement("th");
+            passwordCol.innerText = "Password";
+            const accountIDCol = document.createElement("th");
+            accountIDCol.innerText = "Account ID";
+
+            userTable.appendChild(fNameCol);
+            userTable.appendChild(lNameCol);
+            userTable.appendChild(emailCol);
+            userTable.appendChild(addressCol);
+            userTable.appendChild(phoneCol);
+            userTable.appendChild(passwordCol);
+            userTable.appendChild(accountIDCol);
+
             const endElement = document.getElementById("adminButtons");
             endElement.appendChild(userTable);
             data.forEach(user => {
