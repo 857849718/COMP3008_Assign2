@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataTier.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Transactions;
 
 namespace BusinessTier.Controllers
 {
@@ -41,6 +43,23 @@ namespace BusinessTier.Controllers
             }
 
             return StatusCode((int)response.StatusCode, response.Content);
+        }
+
+        [HttpPost]
+        public IActionResult Post(DataTier.Models.Transaction transaction)
+        {
+            try
+            {
+                if (TransactionsOps.Insert(transaction))
+                {
+                    return Ok("Transaction successfully created!");
+                }
+                return BadRequest("Transaction creation error!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Transaction creation error!");
+            }
         }
     }
 }
