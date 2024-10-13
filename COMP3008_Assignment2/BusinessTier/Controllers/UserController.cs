@@ -22,7 +22,7 @@ namespace BusinessTier.Controllers
 
         // retrieve user profile by email
         [HttpGet]
-        [Route("{email}")]
+        [Route("get/{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
             UserProfile profile = ProfilesOps.GetProfileByEmail(email);
