@@ -22,6 +22,7 @@ namespace DataTier.Controllers
 
         // retrieve user profile by email
         [HttpGet]
+        [Route("{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
             UserProfile profile = ProfilesOps.GetProfileByEmail(email);
@@ -29,7 +30,7 @@ namespace DataTier.Controllers
             {
                 return Ok(profile);
             }
-            return NotFound();
+            return NotFound("User profile not found");
         }
 
         // update profile
@@ -45,6 +46,7 @@ namespace DataTier.Controllers
 
         // delete profile
         [HttpDelete]
+        [Route("{email}")]
         public IActionResult DeleteProfile(string email)
         {
             if(ProfilesOps.Delete(email))

@@ -10,9 +10,10 @@ namespace DataTier.Controllers
     [ApiController]
     public class TransacController : ControllerBase
     {
-        //deposite
+        //deposit
         [HttpPatch]
-        public IActionResult Deposite(int accNo, double amount)
+        [Route("deposit/{accNo}/{amount}")]
+        public IActionResult Deposit(int accNo, double amount)
         {
             // retrieving account data
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
@@ -25,7 +26,7 @@ namespace DataTier.Controllers
             // account info availability and input amount check
             if (accountOld == null || amount <= 0)
             {
-                return BadRequest("Account not found or invalid input");
+                return BadRequest("Transaction failed, account not found or invalid input");
             }
 
             // adding amount into account balance and updating entry in DB
@@ -40,7 +41,7 @@ namespace DataTier.Controllers
             {
                 // if failed, revert change and return badrequest
                 AccountsOps.Update(accountOld);
-                return BadRequest("Transaction failed");
+                return BadRequest("Transaction failed, database failed to be updated");
             }
 
             // saving transaction record
@@ -50,6 +51,7 @@ namespace DataTier.Controllers
         }
         // withdrawal
         [HttpPatch]
+        [Route("withdraw/{accNo}/{amount}")]
         public IActionResult Withdraw(int accNo, double amount)
         {
             // retrieving account data
@@ -63,7 +65,7 @@ namespace DataTier.Controllers
             // account info availability and input amount check
             if (accountOld == null || amount <= 0)
             {
-                return BadRequest("Account not found or invalid input");
+                return BadRequest("Transaction failed, account not found or invalid input");
             }
 
             // adding amount into account balance and updating entry in DB
@@ -78,7 +80,7 @@ namespace DataTier.Controllers
             {
                 // if failed, revert change and return badrequest
                 AccountsOps.Update(accountOld);
-                return BadRequest("Transaction failed");
+                return BadRequest("Transaction failed, database failed to be updated");
             }
             // saving transaction record
             TransactionsOps.Insert(transaction);
@@ -91,6 +93,7 @@ namespace DataTier.Controllers
         {
             return Math.Abs(startamount - endamount) == amount;
         }
+
         /*logging?
         private void Log(string log)
         {

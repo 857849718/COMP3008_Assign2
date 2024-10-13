@@ -37,9 +37,9 @@
         public override string ToString()
         {
             string accountDetails = "Account ID: " + accountID +
-                "\n Balance: " + balance +
-                "\n First Name: " + firstName +
-                "\n Last Name: " + lastName;
+                "\nBalance: " + balance +
+                "\nFirst Name: " + firstName +
+                "\nLast Name: " + lastName;
 
             return accountDetails;
         }

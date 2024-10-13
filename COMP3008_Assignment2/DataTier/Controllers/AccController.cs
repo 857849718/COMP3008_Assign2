@@ -29,16 +29,16 @@ namespace DataTier.Controllers
         {
             Console.WriteLine("accNo: "+accNo);
             Account result = AccountsOps.GetAccountByID(accNo);
-            Console.WriteLine(result.ToString());
             if(result != null)
             {
+                Console.WriteLine(result.ToString());
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("Cannot find account");
         }
         //update acc details
         [HttpPatch]
-        public IActionResult UpdateAcc(Account acc)
+        public IActionResult UpdateAcc([FromBody] Account acc)
         {
             if (AccountsOps.Update(acc))
             {
