@@ -23,7 +23,6 @@
         })
         .then(data => {
             if (data.auth) {
-                alert('login success');
                 loadView('userDashBoard');
                 loadScript('/js/userDashBoard.js')
             }
