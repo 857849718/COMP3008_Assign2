@@ -4,15 +4,42 @@
     1.) Create table using document.createElement (append to last element)
 
 */
-let table = null;
+let currentDiv = null;
 
-function clearTable() {
-    if (table) {
-        table.remove();
+function clearDiv() {
+    if (currentDiv) {
+        currentDiv.remove();
     }
 }
 function loadAll() {
-    clearTable();
+    clearDiv();
+    const userDiv = document.createElement("div");
+    const filterBox = document.createElement("select");
+    filterBox.innerText = "Filter Users By:";
+    currentDiv = userDiv;
+
+    const endElement = document.getElementById("adminButtons");
+    const filterText = document.createElement("input");
+    filterText.type = "text";
+    filterText.placeholder = "Value";
+    endElement.appendChild(userDiv);
+    userDiv.appendChild(filterBox);
+    const filterChoices = ["Last Name", "Account ID", "Email"];
+    filterChoices.forEach(choice => {
+        const option = document.createElement("option");
+        option.innerText = choice;
+        filterBox.appendChild(option);
+    });
+    const filterButton = document.createElement("button");
+    filterButton.innerText = "Filter";
+    filterBox.id = "filterBox";
+    userDiv.appendChild(filterText);
+    userDiv.appendChild(filterButton);
+
+    loadUsers(userDiv);
+}
+
+function loadUsers(userDiv) {
     fetch('/api/admin/getusers')
         .then(response => {
             if (!response.ok) {
@@ -21,16 +48,7 @@ function loadAll() {
             return response.json();
         })
         .then(data => {
-            const filterBox = document.createElement("select");
             const userTable = document.createElement("table");
-            filterBox.innerText = "Filter Users By:";
-            const filterChoices = ["Name", "Account ID", "Email"];
-            filterChoices.forEach(choice => {
-                const option = document.createElement("option");
-                option.innerText = choice;
-                filterBox.appendChild(option);
-            });
-            table = userTable;
 
             const fNameCol = document.createElement("th");
             fNameCol.innerText = "First Name";
@@ -60,9 +78,7 @@ function loadAll() {
             userTable.style.padding = "5px";
             userTable.style.border = "2px solid #0f45a9";
 
-            const endElement = document.getElementById("adminButtons");
-            endElement.appendChild(filterBox);
-            endElement.appendChild(userTable);
+            userDiv.appendChild(userTable);
             data.forEach(user => {
                 const row = document.createElement("tr");
                 const userInfo = [user.firstName, user.lastName, user.email, user.address, user.phone, user.password, user.accountID];
@@ -82,7 +98,7 @@ function loadAll() {
 }
 
 function loadTransactions() {
-    clearTable();
+    clearDiv();
     fetch('/api/admin/gettransactions')
         .then(response => {
             if (!response.ok) {
@@ -91,8 +107,9 @@ function loadTransactions() {
             return response.json();
         })
         .then(data => {
+            const transacDiv = document.createElement("div");
             const transacTable = document.createElement("table");
-            table = transacTable;
+            currentDiv = transacDiv;
 
             const amountCol = document.createElement("th");
             amountCol.innerText = "Amount";
@@ -114,7 +131,8 @@ function loadTransactions() {
             transacTable.style.border = "2px solid #0f45a9";
 
             const endElement = document.getElementById("adminButtons");
-            endElement.appendChild(transacTable);
+            endElement.appendChild(transacDiv);
+            transacDiv.appendChild(transacTable);
             data.forEach(transaction => {
                 const row = document.createElement("tr");
                 const transacInfo = [transaction.amount, transaction.accountID, transaction.description, transaction.time];
