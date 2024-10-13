@@ -100,11 +100,14 @@ namespace PresentationLayer.Controllers
 
                 if (email.Equals("admin@bankingsolutions.com") && password.Trim().Equals(newProfile.Password))
                 {
+                    Console.WriteLine("admin");
                     auth = new { auth = true, msg = "Log in successful.", adminFlag = true };
                     return Json(auth);
                 }
-
-                auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
+                else
+                {
+                    auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
+                }
             }
 
             return Json(auth);
@@ -128,7 +131,7 @@ namespace PresentationLayer.Controllers
         // private method: get user profile
         public UserProfileIntermed GetProfileByEmail(string email)
         {
-            var request = new RestRequest($"/api/user/{email}", Method.Get);
+            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
             if (response.IsSuccessful)
