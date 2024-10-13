@@ -13,6 +13,7 @@ namespace PresentationLayer.Controllers
         [HttpGet("ShowAdminDashboard")]
         public IActionResult ShowAdminDashboard()
         {
+            Console.WriteLine("Showing admin dashboard");
             UserProfileIntermed adminProfile = GetProfileByEmail("admin@bankingsolutions.com");
             ViewBag.adminName = adminProfile.FirstName;
             ViewBag.adminEmail = adminProfile.Email;

@@ -76,13 +76,12 @@ namespace PresentationLayer.Controllers
 
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
-            Console.WriteLine("retrieved email: " + newProfile.Email);
-            Console.WriteLine("retrieved password: " + newProfile.Password);
-
-
+            
             if (newProfile != null)
             {
                 Console.WriteLine(newProfile.ToString());
+                Console.WriteLine("retrieved email: " + newProfile.Email);
+                Console.WriteLine("retrieved password: " + newProfile.Password);
             }
 
             // Console.WriteLine(email);
