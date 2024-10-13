@@ -58,6 +58,7 @@ namespace BusinessTier.Controllers
 
         // get all profiles
         [HttpGet]
+        [Route("getprofiles")]
         public IActionResult GetProfiles()
         {
             List<UserProfile> profiles = ProfilesOps.GetAll();

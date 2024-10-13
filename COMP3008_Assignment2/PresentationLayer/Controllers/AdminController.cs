@@ -36,7 +36,9 @@ namespace PresentationLayer.Controllers
         }
 
         // method to retrieve list of users
-        private List<UserProfileIntermed> GetUsers()
+        [HttpGet]
+        [Route("getusers")]
+        public IActionResult GetUsers()
         {
             RestClient restClient = new RestClient("http://localhost:5186");
             var request = new RestRequest("/api/user/getprofiles", Method.Get);
@@ -44,8 +46,10 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
-                List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
-                return profiles;
+                var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                return Ok(profiles);
+                //List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                //return profiles;
             }
             return null;
         }
