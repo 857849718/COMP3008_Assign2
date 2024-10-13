@@ -44,6 +44,7 @@ function loadLoginForm() {
     loadView('loginForm');
     loadScript('/js/login.js');
     loadScript('/js/userDashBoard.js');
+    loadScript('/js/adminDashboard.js');
 }
 
 function loginAuthentication() {
