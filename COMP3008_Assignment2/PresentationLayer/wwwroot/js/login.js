@@ -23,6 +23,7 @@
         })
         .then(data => {
             if (data.auth) {
+                localStorage.setItem("email", email);
                 loadView('userDashBoard');
                 loadScript('/js/userDashBoard.js')
             }

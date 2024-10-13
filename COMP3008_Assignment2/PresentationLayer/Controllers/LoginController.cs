@@ -13,6 +13,7 @@ namespace PresentationLayer.Controllers
         private readonly RestClient RestClient = new RestClient("http://localhost:5186");
         private Random random = new Random();
         private static readonly Dictionary<string, string> sessions = new Dictionary<string, string>();
+        private ProfileSingleton profileS;
 
         // show login form if no sessionID, user dashboard if logged in
         [HttpGet("ShowLoginForm")]
@@ -65,6 +66,8 @@ namespace PresentationLayer.Controllers
             
             if (response.IsSuccessful)
             {
+                profileS = ProfileSingleton.GetInstance();
+                profileS.Email = email;
                 // create new session
                 string sessionID;
                 do sessionID = random.Next(1, 9999).ToString();

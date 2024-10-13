@@ -11,15 +11,15 @@ function loadScript(scriptSRC) {
 
 function loadView(view) {
     var apiUrl;
-    if (view === 'loginForm') {
+    if (view == 'loginForm' || view == 'userDashBoard') {
         apiUrl = '/api/login/ShowLoginForm';
         console.log("loading form view");
     }
         
-    if (view === 'userDashBoard') {
-        apiUrl = '';
-        console.log("loading user dashboard view");
-    }
+    //if (view === 'userDashBoard') {
+    //    apiUrl = '';
+    //    console.log("loading user dashboard view");
+    //}
 
 
     fetch(apiUrl)
@@ -30,7 +30,7 @@ function loadView(view) {
             return response.text();
         })
         .then(data => {
-            document.getElementById('main').innerHTML = data;
+            document.getElementById("main").innerHTML = data;
         })
         .catch(error => {
             console.error('Fetch error:', error);
