@@ -3,6 +3,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using Intermed;
+using PresentationLayer.Models;
 
 namespace PresentationLayer.Controllers
 {
@@ -33,12 +34,16 @@ namespace PresentationLayer.Controllers
 
         // login
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] string email)
+        public IActionResult Login([FromBody] Profile profile)
         {
-            email = email.ToLower();
+            string email = profile.Email;
+            string password = profile.Password;
+
             // get user account info
+            var client = new RestClient("http://localhost:5187");
             var request = new RestRequest($"/api/user/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
+            Profile newProfile = JsonConvert.DeserializeObject<Profile>(response.Content);
 
             Console.WriteLine(email);
 
