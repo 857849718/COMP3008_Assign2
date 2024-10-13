@@ -25,7 +25,6 @@
             if (data.auth) {
                 localStorage.setItem("email", email);
                 loadView('userDashBoard');
-                loadScript('/js/userDashBoard.js')
             }
             else {
                 alert(data.msg);

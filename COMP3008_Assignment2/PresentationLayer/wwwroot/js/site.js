@@ -13,7 +13,7 @@ function loadView(view) {
     var apiUrl;
     if (view == 'loginForm' || view == 'userDashBoard') {
         apiUrl = '/api/login/ShowLoginForm';
-        console.log("loading form view");
+        console.log("loading login view");
     }
         
     //if (view === 'userDashBoard') {
