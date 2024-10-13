@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Intermed;
 using PresentationLayer.Models;
+using System.Net;
 
 namespace PresentationLayer.Controllers
 {
@@ -37,12 +38,30 @@ namespace PresentationLayer.Controllers
                     ViewBag.lName = account.LastName;
                     ViewBag.email = userProfile.Email;
                     ViewBag.balance = account.Balance;
+                    ViewBag.phone = userProfile.Phone.ToString();
 
                     return PartialView("UserDashBoard");
                 }
             }
             Console.WriteLine("Showing login form");
             return PartialView("LoginForm");
+        }
+
+        // show update user info form
+        public IActionResult ShowUserInfoUpdateForm()
+        {
+            // get account info
+            var cookie = Request.Cookies["SessionID"];
+            UserProfileIntermed userProfile;
+            userProfile = GetProfileByEmail(sessions[cookie]);
+            Console.WriteLine("Showing user info update form");
+
+            // viewbag parameter assign
+            ViewBag.password = userProfile.Password;
+            ViewBag.phone = userProfile.Phone.ToString();
+            ViewBag.address = userProfile.Address;
+
+            return PartialView("UpdateInfoForm");
         }
 
         // login

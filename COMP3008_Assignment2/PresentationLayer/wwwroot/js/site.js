@@ -20,6 +20,10 @@ function loadView(view) {
         loadScript('/js/adminDashboard.js');
         console.log("Loading admin view");
     }
+    if (view == 'updateInfoForm') {
+        apiUrl = 'api/user/ShowUserInfoUpdateForm';
+        console.log("Loading user info update view");
+    }
         
     //if (view === 'userDashBoard') {
     //    apiUrl = '';

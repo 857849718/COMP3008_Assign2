@@ -3,18 +3,21 @@
     string lName = ViewBag.lName;
     string email = ViewBag.email;
     string balance = ViewBag.balance;
+    string phone = ViewBag.phone;
 }
 
 <div id="userdashboard">
     <p id="fName">First Name: @fName</p>
     <p id="lName">Last Name: @lName</p>
     <p id="email">Email: @email</p>
+    <p id="email">Phone: @phone</p>
     <p id="balance">Balance: @balance</p>
+    <button type="button" id="personalInfoUpdateBtn" onclick="updateInfo()">Update my info</button>
 </div>
 
 <div id="transfer">
     <input type="text" id="amount" name="amount" placeholder="Amount"  />
     <input type="text" id="accountID" name="accountID" placeholder="Recipient account ID"  />
     <input type="text" id="description" name="description" placeholder="Description" />
-    <button type="button" id="SubmitButton" onclick="transfer()">Transfer</button>
+    <button type="button" id="transferBtn" onclick="transfer()">Transfer</button>
 </div>

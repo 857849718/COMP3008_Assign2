@@ -41,3 +41,7 @@ function transfer() {
             console.error('Fetch error:', error);
         });
 }
+
+function updateInfo() {
+    loadView('updateInfoForm');
+}
