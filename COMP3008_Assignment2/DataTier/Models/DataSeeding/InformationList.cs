@@ -47,5 +47,18 @@
 
             return addresses;
         }
+
+        public static List<String> Descriptions()
+        {
+            List<String> descriptions = new List<String>();
+
+            descriptions.Add("Withdraw for new PC");
+            descriptions.Add("Withdraw to pay plumber");
+            descriptions.Add("Deposit weekly salary");
+            descriptions.Add("Deposit; pay from plumbing client");
+            descriptions.Add("Withdraw to pay friend back");
+
+            return descriptions;
+        }
     }
 }
