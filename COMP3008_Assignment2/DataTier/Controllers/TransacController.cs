@@ -13,7 +13,7 @@ namespace DataTier.Controllers
         //deposit
         [HttpPatch]
         [Route("deposit/{accNo}/{amount}")]
-        public IActionResult Deposit(int accNo, double amount)
+        public IActionResult Deposit(int accNo, double amount, string description)
         {
             // retrieving account data
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
@@ -21,7 +21,7 @@ namespace DataTier.Controllers
             Account accountNew = accountOld; // used to performing change
             double startamount = accountOld.Balance;
             double endamount;
-            Transaction transaction = new Transaction(amount, accNo);
+            Transaction transaction = new Transaction(amount, accNo, description, DateTime.Now.ToString());
 
             // account info availability and input amount check
             if (accountOld == null || amount <= 0)
@@ -52,7 +52,7 @@ namespace DataTier.Controllers
         // withdrawal
         [HttpPatch]
         [Route("withdraw/{accNo}/{amount}")]
-        public IActionResult Withdraw(int accNo, double amount)
+        public IActionResult Withdraw(int accNo, double amount, string description)
         {
             // retrieving account data
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
@@ -60,7 +60,7 @@ namespace DataTier.Controllers
             Account accountNew = accountOld; // used to performing change
             double startamount = accountOld.Balance;
             double endamount;
-            Transaction transaction = new Transaction((amount * -1), accNo);
+            Transaction transaction = new Transaction((amount * -1), accNo, description, DateTime.Now.ToString());
 
             // account info availability and input amount check
             if (accountOld == null || amount <= 0)
