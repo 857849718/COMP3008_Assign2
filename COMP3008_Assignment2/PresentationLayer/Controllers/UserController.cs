@@ -58,8 +58,6 @@ namespace PresentationLayer.Controllers
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
             
-
-
             if (newProfile != null)
             {
                 Console.WriteLine(newProfile.ToString());
