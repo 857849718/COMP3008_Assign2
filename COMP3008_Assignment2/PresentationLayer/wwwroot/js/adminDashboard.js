@@ -22,25 +22,38 @@ function loadAll() {
     const filterText = document.createElement("input");
     filterText.type = "text";
     filterText.placeholder = "Value";
+    filterText.id = "filterText";
     endElement.appendChild(userDiv);
     userDiv.appendChild(filterBox);
     const filterChoices = ["Last Name", "Account ID", "Email"];
     filterChoices.forEach(choice => {
         const option = document.createElement("option");
+        option.value = choice;
         option.innerText = choice;
         filterBox.appendChild(option);
     });
     const filterButton = document.createElement("button");
     filterButton.innerText = "Filter";
     filterBox.id = "filterBox";
+    
+    filterButton.onclick = () => {
+        const selectedFilter = filterBox.value;
+        const filterValue = filterText.value;
+        loadUsers(userDiv, selectedFilter, filterValue);
+    }
     userDiv.appendChild(filterText);
     userDiv.appendChild(filterButton);
 
     loadUsers(userDiv);
 }
 
-function loadUsers(userDiv) {
-    fetch('/api/admin/getusers')
+function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
+    let filter = "";
+    if (selectedFilter = "Email" && filterValue != "") {
+        filter = "Email ->" + filterValue;
+    }
+    let request = '/api/admin/getusers';
+    fetch(request)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response not ok');
