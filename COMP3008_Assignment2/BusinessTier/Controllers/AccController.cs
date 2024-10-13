@@ -28,7 +28,7 @@ namespace BusinessTier.Controllers
         [HttpGet] //TODO: probably need to be post
         public IActionResult GetAccByAccNo(int accNo)
         {
-            Console.WriteLine("accNo: "+accNo);
+            Console.WriteLine("accNo: " + accNo);
             Account result = AccountsOps.GetAccountByID(accNo);
             if(result != null)
             {

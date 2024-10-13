@@ -95,7 +95,7 @@ namespace BusinessTier.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(DataTier.Models.Transaction transaction)
+        public IActionResult Post(Transaction transaction)
         {
             try
             {
@@ -109,6 +109,17 @@ namespace BusinessTier.Controllers
             {
                 return BadRequest("Transaction creation error!");
             }
+        }
+
+        // get transaction list by accoundID
+        [HttpGet("{accNo}")]
+        public IEnumerable<Transaction> GetTransactionList(int accNo)
+        {
+            if (TransactionsOps.GetTransactionsByID(accNo) != null)
+            {
+                return TransactionsOps.GetTransactionsByID(accNo);
+            }
+            return null;
         }
     }
 }

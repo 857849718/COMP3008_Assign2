@@ -23,12 +23,10 @@ function loadView(view) {
         apiUrl = 'api/user/ShowUserInfoUpdateForm';
         console.log("Loading user info update view");
     }
-        
-    //if (view === 'userDashBoard') {
-    //    apiUrl = '';
-    //    console.log("loading user dashboard view");
-    //}
-
+    if (view == 'transacHistory') {
+        apiUrl = 'api/user/ShowTransacHistory';
+        console.log("Loading transaction history view");
+    }
 
     fetch(apiUrl)
         .then(response => {
