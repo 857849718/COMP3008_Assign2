@@ -10,6 +10,7 @@ namespace DataTier.Models.DataSeeding
         private static List<String> emails = InformationList.Emails();
         private static List<String> passwords = InformationList.Passwords();
         private static List<String> addresses = InformationList.Addresses();
+        private static List<String> descriptions = InformationList.Descriptions();
 
         static Random rand = new Random();
         static int index;
@@ -38,8 +39,9 @@ namespace DataTier.Models.DataSeeding
             {
                 int accountID = getID();
                 int amount = getAmount();
+                String description = descriptions[i];
 
-                Transaction transaction = new Transaction(amount, accountID);
+                Transaction transaction = new Transaction(amount, accountID, description, DateTime.Now.ToString());
                 TransactionsOps.Insert(transaction);
             }
         }

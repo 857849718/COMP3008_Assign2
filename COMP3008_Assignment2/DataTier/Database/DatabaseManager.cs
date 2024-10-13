@@ -36,6 +36,8 @@ namespace DataTier.Database
                         command.CommandText = @"CREATE TABLE IF NOT EXISTS Transactions (
                             TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
                             Amount REAL,
+                            Description TEXT,
+                            Time TEXT,
                             AccountID INTEGER,
                             FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
                         )";
