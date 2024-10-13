@@ -41,4 +41,11 @@ function loadLoginForm() {
     loadScript('/js/login.js');
 }
 
+function loginAuthentication() {
+    let email = document.getElementByIdR("email").value;
+    let password = document.getElementById("password").value;
+
+    const loginAPI = "api/login/authenticate";
+}
+
 document.addEventListener("DOMContentLoaded", loadLoginForm);
