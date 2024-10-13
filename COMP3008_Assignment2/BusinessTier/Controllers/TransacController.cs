@@ -1,16 +1,8 @@
 ﻿using DataTier.Database;
-<<<<<<< HEAD
 using DataTier.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
-=======
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RestSharp;
-using System.Transactions;
->>>>>>> ccdb17a431334e2f063c48309e0506d8491f4f80
 
 namespace BusinessTier.Controllers
 {
@@ -96,20 +88,12 @@ namespace BusinessTier.Controllers
             return Ok("Transaction successful");
         }
 
-<<<<<<< HEAD
         // verifying
         private bool TransVeri(double startamount, double amount, double endamount)
         {
             return Math.Abs(startamount - endamount) == amount;
         }
 
-        /*logging?
-        private void Log(string log)
-        {
-
-        }
-        */
-=======
         [HttpPost]
         public IActionResult Post(DataTier.Models.Transaction transaction)
         {
@@ -126,6 +110,5 @@ namespace BusinessTier.Controllers
                 return BadRequest("Transaction creation error!");
             }
         }
->>>>>>> ccdb17a431334e2f063c48309e0506d8491f4f80
     }
 }
