@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
 using Intermed;
+using DataTier;
+using DataTier.Models;
+using DataTier.Database;
 
 namespace BusinessTier.Controllers
 {
@@ -31,18 +34,25 @@ namespace BusinessTier.Controllers
 
         // Retrieve user profile by email
         [HttpGet]
-        [Route("{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
-            var request = new RestRequest($"/api/User/{email}", Method.Get);
-            RestResponse response = RestClient.Execute(request);
+            //var request = new RestRequest($"/api/User/{email}", Method.Get);
+            //RestResponse response = RestClient.Execute(request);
 
-            if (response.IsSuccessful)
+            UserProfile profile = ProfilesOps.GetProfileByEmail(email);
+
+            return new ObjectResult(profile)
             {
-                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
-                return Ok(profile);
-            }
-            return StatusCode((int)response.StatusCode, response.Content);
+                StatusCode = 200,
+                ContentTypes = { "application/json" }
+            };
+
+            //if (response.IsSuccessful)
+            //{
+            //    var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+            //    return Ok(profile);
+            //}
+            //return StatusCode((int)response.StatusCode, response.Content);
         }
 
         // Update profile

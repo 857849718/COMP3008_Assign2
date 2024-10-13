@@ -40,10 +40,10 @@ namespace PresentationLayer.Controllers
             string password = profile.Password;
 
             // get user account info
-            var client = new RestClient("http://localhost:5187");
-            var request = new RestRequest($"/api/user/{email}", Method.Get);
-            RestResponse response = RestClient.Execute(request);
-            Profile newProfile = JsonConvert.DeserializeObject<Profile>(response.Content);
+            var client = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user/{email}");
+            RestResponse response = RestClient.Get(request);
+            UserProfileIntermed newProfile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
 
             Console.WriteLine(email);
 
