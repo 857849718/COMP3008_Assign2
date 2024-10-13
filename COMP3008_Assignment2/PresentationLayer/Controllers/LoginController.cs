@@ -41,13 +41,18 @@ namespace PresentationLayer.Controllers
 
             // get user account info
             var client = new RestClient("http://localhost:5186");
-            var request = new RestRequest($"/api/user/{email}");
-            RestResponse response = RestClient.Get(request);
+            var request = new RestRequest($"/api/user/get/{email}");
+            RestResponse response = client.Get(request);
             UserProfileIntermed newProfile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
 
             Console.WriteLine(email);
-
             var auth = new { auth = false, msg = "Account does not exist." };
+
+            if (password.Trim() != newProfile.Password)
+            {
+                auth = new { auth = false, msg = "Error: Invalid credentials!" };
+                return Json(auth);
+            }
 
             // check if email is logged in
             if (sessions.ContainsValue(email))

@@ -44,6 +44,8 @@ namespace BusinessTier.Controllers
 
             UserProfile profile = ProfilesOps.GetProfileByEmail(email);
 
+            Console.WriteLine(profile.ToString());
+
             return new ObjectResult(profile)
             {
                 StatusCode = 200,
