@@ -36,7 +36,7 @@ namespace PresentationLayer.Controllers
                     ViewBag.fName = account.FirstName;
                     ViewBag.lName = account.LastName;
                     ViewBag.email = userProfile.Email;
-                    ViewBag.balance = account.Balance.ToString();
+                    ViewBag.balance = account.Balance;
 
                     return PartialView("UserDashBoard");
                 }
@@ -60,6 +60,11 @@ namespace PresentationLayer.Controllers
             Console.WriteLine("retrieved email: " + newProfile.Email);
             Console.WriteLine("retrieved password: " + newProfile.Password);
 
+
+            if (newProfile != null)
+            {
+                Console.WriteLine(newProfile.ToString());
+            }
 
             // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist.", adminFlag = false };
@@ -98,11 +103,14 @@ namespace PresentationLayer.Controllers
 
                 if (email.Equals("admin@bankingsolutions.com") && password.Trim().Equals(newProfile.Password))
                 {
+                    Console.WriteLine("admin");
                     auth = new { auth = true, msg = "Log in successful.", adminFlag = true };
                     return Json(auth);
                 }
-
-                auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
+                else
+                {
+                    auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
+                }
             }
 
             return Json(auth);
@@ -166,7 +174,7 @@ namespace PresentationLayer.Controllers
         // private method: get user profile
         private UserProfileIntermed GetProfileByEmail(string email)
         {
-            var request = new RestRequest($"/api/user/{email}", Method.Get);
+            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
             if (response.IsSuccessful)
