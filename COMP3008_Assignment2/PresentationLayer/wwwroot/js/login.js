@@ -1,12 +1,17 @@
 ﻿function login() {
-    var email = document.getElementById('Email').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var data = {
+        Email: email,
+        Password: password
+    };
 
     const request = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(email)
+        body: JSON.stringify(data)
     };
 
     fetch('/api/login/Login', request)
