@@ -13,7 +13,6 @@ namespace PresentationLayer.Controllers
         private readonly RestClient RestClient = new RestClient("http://localhost:5186");
         private Random random = new Random();
         private static readonly Dictionary<string, string> sessions = new Dictionary<string, string>();
-        private ProfileSingleton profileS;
 
 
         // show login form if no sessionID, user dashboard if logged in
@@ -53,6 +52,9 @@ namespace PresentationLayer.Controllers
             string email = profile.Email;
             string password = profile.Password;
 
+            Console.WriteLine("email: " + email);
+            Console.WriteLine("password: "+password);
+
             // get user account info
             var client = new RestClient("http://localhost:5186");
             var request = new RestRequest($"/api/user/get/{email}");
@@ -61,6 +63,12 @@ namespace PresentationLayer.Controllers
 
             // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist." };
+
+            if (newProfile.Password == null)
+            {
+                auth = new { auth = false, msg = "Error: Invalid credentials!" };
+                return Json(auth);
+            }
 
             if (password.Trim() != newProfile.Password)
             {
@@ -79,8 +87,6 @@ namespace PresentationLayer.Controllers
             
             if (response.IsSuccessful)
             {
-                profileS = ProfileSingleton.GetInstance();
-                profileS.Email = email;
                 // create new session
                 string sessionID;
                 do sessionID = random.Next(1, 9999).ToString();
