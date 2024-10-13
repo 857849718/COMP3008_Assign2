@@ -110,5 +110,18 @@ namespace BusinessTier.Controllers
                 return BadRequest("Transaction creation error!");
             }
         }
+
+        // get all transactions
+        [HttpGet]
+        [Route("gettransactions")]
+        public IActionResult GetTransactions()
+        {
+            List<Transaction> transactions = TransactionsOps.GetAll();
+            if (transactions != null)
+            {
+                return Ok(transactions);
+            }
+            return NotFound("No transactions in database");
+        }
     }
 }

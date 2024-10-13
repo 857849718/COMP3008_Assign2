@@ -57,5 +57,12 @@ namespace PresentationLayer.Controllers
             }
             return null;
         }
+
+        // method to retrieve list of transactions
+        [Route("gettransactions")]
+        public IActionResult GetTransactions()
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+        }
     }
 }
