@@ -17,7 +17,10 @@ namespace BusinessTier.Controllers
          *      3.) Choose 'Body' and 'form-data'
          *      4.) In 'Key' column, type 'fileName'
          *      5.) In dropdown, choose 'File'
-         *      6.) File can then be sent (will be uploaded to directory
+         *      6.) Create another key-value, this time with
+         *      'newFileName' as the key, and a chosen filename as the
+         *      value (of type text).
+         *      7.) File can then be sent (will be uploaded to directory
          *      in BusinessWebAPI called 'ProfilePictures')
          */
         [HttpPost]
