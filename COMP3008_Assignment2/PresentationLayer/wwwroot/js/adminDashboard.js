@@ -21,7 +21,15 @@ function loadAll() {
             return response.json();
         })
         .then(data => {
+            const filterBox = document.createElement("select");
             const userTable = document.createElement("table");
+            filterBox.innerText = "Filter Users By:";
+            const filterChoices = ["Name", "Account ID", "Email"];
+            filterChoices.forEach(choice => {
+                const option = document.createElement("option");
+                option.innerText = choice;
+                filterBox.appendChild(option);
+            });
             table = userTable;
 
             const fNameCol = document.createElement("th");
@@ -53,6 +61,7 @@ function loadAll() {
             userTable.style.border = "2px solid #0f45a9";
 
             const endElement = document.getElementById("adminButtons");
+            endElement.appendChild(filterBox);
             endElement.appendChild(userTable);
             data.forEach(user => {
                 const row = document.createElement("tr");
