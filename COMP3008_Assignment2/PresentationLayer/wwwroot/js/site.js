@@ -42,7 +42,7 @@ function loadLoginForm() {
 }
 
 function loginAuthentication() {
-    let email = document.getElementByIdR("email").value;
+    let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
     const loginAPI = "api/login/authenticate";

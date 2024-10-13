@@ -8,6 +8,30 @@ html {
   }
 }
 
+div#header {
+    padding:5px;
+    margin-bottom:20px;
+    background-color:midnightblue;
+    color:white;
+}
+
+div#footer {
+    padding:5px;
+    background-color: midnightblue;
+    color:white;
+}
+
+div#navigationBar {
+    padding: 20px;
+    background-color: deepskyblue;
+}
+
+div#main {
+    margin:20px;
+    padding:20px;
+    background-color:lightblue
+}
+
 html {
   position: relative;
   min-height: 100%;
