@@ -37,7 +37,7 @@ namespace PresentationLayer.Controllers
                     ViewBag.fName = account.FirstName;
                     ViewBag.lName = account.LastName;
                     ViewBag.email = userProfile.Email;
-                    ViewBag.balance = account.Balance;
+                    ViewBag.balance = account.Balance.ToString();
                     ViewBag.phone = userProfile.Phone.ToString();
 
                     return PartialView("UserDashBoard");
@@ -76,19 +76,13 @@ namespace PresentationLayer.Controllers
 
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
-            
-            if (newProfile != null)
-            {
-                Console.WriteLine(newProfile.ToString());
-                Console.WriteLine("retrieved email: " + newProfile.Email);
-                Console.WriteLine("retrieved password: " + newProfile.Password);
-            }
 
             // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist.", adminFlag = false };
 
             if (newProfile == null)
             {
+                Console.WriteLine("retrieved account is null");
                 auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
                 return Json(auth);
             }
@@ -110,6 +104,10 @@ namespace PresentationLayer.Controllers
             
             if (newProfile !=null)
             {
+                Console.WriteLine(newProfile.ToString());
+                Console.WriteLine("retrieved email: " + newProfile.Email);
+                Console.WriteLine("retrieved password: " + newProfile.Password);
+
                 // create new session
                 string sessionID;
                 do sessionID = random.Next(1, 9999).ToString();
@@ -192,7 +190,7 @@ namespace PresentationLayer.Controllers
         // private method: get user profile
         private UserProfileIntermed GetProfileByEmail(string email)
         {
-            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
+            var request = new RestRequest($"/api/user/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
             if (response.IsSuccessful)

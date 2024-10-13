@@ -42,6 +42,6 @@ function transfer() {
         });
 }
 
-function updateInfo() {
+function loadUpdateInfoView() {
     loadView('updateInfoForm');
 }
