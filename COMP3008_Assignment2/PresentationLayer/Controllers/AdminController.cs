@@ -59,10 +59,22 @@ namespace PresentationLayer.Controllers
         }
 
         // method to retrieve list of transactions
+        [HttpGet]
         [Route("gettransactions")]
         public IActionResult GetTransactions()
         {
             RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest("/api/transac/gettransactions", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+                return Ok(transactions);
+                //List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                //return profiles;
+            }
+            return null;
         }
     }
 }

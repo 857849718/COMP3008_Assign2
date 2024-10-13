@@ -4,7 +4,15 @@
     1.) Create table using document.createElement (append to last element)
 
 */
+let table = null;
+
+function clearTable() {
+    if (table) {
+        table.remove();
+    }
+}
 function loadAll() {
+    clearTable();
     fetch('/api/admin/getusers')
         .then(response => {
             if (!response.ok) {
@@ -14,6 +22,7 @@ function loadAll() {
         })
         .then(data => {
             const userTable = document.createElement("table");
+            table = userTable;
 
             const fNameCol = document.createElement("th");
             fNameCol.innerText = "First Name";
@@ -57,6 +66,58 @@ function loadAll() {
                     row.appendChild(infoCell);
                 })
                 userTable.appendChild(row);
+            });
+
+        })
+        .catch(error => console.error("Error: ", error));
+}
+
+function loadTransactions() {
+    clearTable();
+    fetch('/api/admin/gettransactions')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const transacTable = document.createElement("table");
+            table = transacTable;
+
+            const amountCol = document.createElement("th");
+            amountCol.innerText = "Amount";
+            const accountIDCol = document.createElement("th");
+            accountIDCol.innerText = "Account ID";
+            const descriptionCol = document.createElement("th");
+            descriptionCol.innerText = "Description";
+            const timeCol = document.createElement("th");
+            timeCol.innerText = "Time";
+
+            transacTable.appendChild(amountCol);
+            transacTable.appendChild(accountIDCol);
+            transacTable.appendChild(descriptionCol);
+            transacTable.appendChild(timeCol);
+
+            transacTable.style.backgroundColor = "#69ffa6";
+            transacTable.style.margin = "10px auto";
+            transacTable.style.padding = "5px";
+            transacTable.style.border = "2px solid #0f45a9";
+
+            const endElement = document.getElementById("adminButtons");
+            endElement.appendChild(transacTable);
+            data.forEach(transaction => {
+                const row = document.createElement("tr");
+                const transacInfo = [transaction.amount, transaction.accountID, transaction.description, transaction.time];
+                transacInfo.forEach(info => {
+                    const infoCell = document.createElement("td");
+                    infoCell.innerText = info;
+                    infoCell.style.border = "2px solid #0f45a9";
+                    infoCell.padding = "2px";
+                    infoCell.textAlign = "center";
+                    row.appendChild(infoCell);
+                })
+                transacTable.appendChild(row);
             });
 
         })
