@@ -4,13 +4,6 @@ using DataTier.Models.DataSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
-DatabaseManager.CreateTables();
-
-if (AccountsOps.GetAll().Count() == 0)
-{
-    RandomGenerator.Generate();
-}
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
