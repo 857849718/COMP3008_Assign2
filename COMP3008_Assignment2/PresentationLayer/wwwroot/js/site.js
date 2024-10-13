@@ -15,6 +15,9 @@ function loadView(view) {
         apiUrl = '/api/login/ShowLoginForm';
         console.log("loading login view");
     }
+    if (view == 'adminDashboard') {
+        
+    }
         
     //if (view === 'userDashBoard') {
     //    apiUrl = '';

@@ -5,7 +5,12 @@ namespace PresentationLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class AdminController : Controller
     {
+        [HttpGet("ShowAdminDashboard")]
+        public IActionResult ShowAdminDashboard()
+        {
+            return PartialView("AdminDashboard");
+        }
     }
 }
