@@ -12,7 +12,7 @@ function loadScript(scriptSRC) {
 function loadView(view) {
     var apiUrl;
     if (view == 'loginForm' || view == 'userDashBoard') {
-        apiUrl = '/api/login/ShowLoginForm';
+        apiUrl = '/api/user/ShowLoginForm';
         console.log("loading login view");
     }
     if (view == 'adminDashboard') {
@@ -42,13 +42,14 @@ function loadView(view) {
 function loadLoginForm() {
     loadView('loginForm');
     loadScript('/js/login.js');
+    loadScript('/js/userDashBoard.js');
 }
 
 function loginAuthentication() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
-    const loginAPI = "api/login/authenticate";
+    const loginAPI = "api/user/authenticate";
 }
 
 document.addEventListener("DOMContentLoaded", loadLoginForm);
