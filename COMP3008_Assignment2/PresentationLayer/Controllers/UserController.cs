@@ -13,7 +13,6 @@ namespace PresentationLayer.Controllers
         private readonly RestClient RestClient = new RestClient("http://localhost:5186");
         private Random random = new Random();
         private static readonly Dictionary<string, string> sessions = new Dictionary<string, string>();
-        private ProfileSingleton profileS;
 
 
         // show login form if no sessionID, user dashboard if logged in
@@ -53,22 +52,31 @@ namespace PresentationLayer.Controllers
             string email = profile.Email;
             string password = profile.Password;
 
+            Console.WriteLine("email: " + email);
+            Console.WriteLine("password: "+password);
+
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
 
             // Console.WriteLine(email);
-            var auth = new { auth = false, msg = "Account does not exist." };
+            var auth = new { auth = false, msg = "Account does not exist.", adminFlag = false };
+
+            if (newProfile.Password == null)
+            {
+                auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
+                return Json(auth);
+            }
 
             if (password.Trim() != newProfile.Password)
             {
-                auth = new { auth = false, msg = "Error: Invalid credentials!" };
+                auth = new { auth = false, msg = "Error: Invalid credentials!", adminFlag = false };
                 return Json(auth);
             }
 
             // check if email is logged in
             if (sessions.ContainsValue(email))
             {
-                auth = new { auth = false, msg = "This account is currently in use." };
+                auth = new { auth = false, msg = "This account is currently in use.", adminFlag = false };
                 return Json(auth);
             }
 
@@ -76,8 +84,6 @@ namespace PresentationLayer.Controllers
             
             if (newProfile !=null)
             {
-                profileS = ProfileSingleton.GetInstance();
-                profileS.Email = email;
                 // create new session
                 string sessionID;
                 do sessionID = random.Next(1, 9999).ToString();
@@ -86,7 +92,14 @@ namespace PresentationLayer.Controllers
 
                 //var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
                 Response.Cookies.Append("SessionID", sessionID.ToString());
-                auth = new { auth = true, msg = "Log in successful." };
+
+                if (email.Equals("admin@bankingsolutions.com") && password.Trim().Equals(newProfile.Password))
+                {
+                    auth = new { auth = true, msg = "Log in successful.", adminFlag = true };
+                    return Json(auth);
+                }
+
+                auth = new { auth = true, msg = "Log in successful.", adminFlag = false };
             }
 
             return Json(auth);
