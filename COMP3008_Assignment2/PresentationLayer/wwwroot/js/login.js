@@ -22,13 +22,13 @@
             return response.json();
         })
         .then(data => {
-            if (data.auth) {
-                if (data.adminFlag) {
-                    loadView('adminDashboard')
-                }
-                else {
-                    loadView('userDashBoard');
-                }
+            if (data.adminFlag) {
+                console.log("admindashboard");
+                loadView('adminDashboard');
+            }
+            else if (data.auth) {
+                console.log("userdashboard");
+                loadView('userDashBoard');
             }
             else {
                 alert(data.msg);

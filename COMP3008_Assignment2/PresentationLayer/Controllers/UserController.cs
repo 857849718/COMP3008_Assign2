@@ -36,7 +36,7 @@ namespace PresentationLayer.Controllers
                     ViewBag.fName = account.FirstName;
                     ViewBag.lName = account.LastName;
                     ViewBag.email = userProfile.Email;
-                    ViewBag.balance = account.Balance.ToString();
+                    ViewBag.balance = account.Balance;
 
                     return PartialView("UserDashBoard");
                 }
