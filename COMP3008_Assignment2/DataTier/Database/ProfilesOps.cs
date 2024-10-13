@@ -9,7 +9,7 @@ namespace DataTier.Database
      */
     public class ProfilesOps
     {
-        private static string connectString = "Data Source=bank.db;Version=3;";
+        private static string connectString = "Data Source=\"C:\\Users\\georg\\source\\repos\\COMP3008_Assign2\\COMP3008_Assignment2\\DataTier\\bank.db\";Version=3;";
 
         public static bool Insert(UserProfile profile)
         {

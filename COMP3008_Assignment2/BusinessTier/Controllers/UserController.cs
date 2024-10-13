@@ -34,10 +34,13 @@ namespace BusinessTier.Controllers
 
         // Retrieve user profile by email
         [HttpGet]
+        [Route("get/{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
             //var request = new RestRequest($"/api/User/{email}", Method.Get);
             //RestResponse response = RestClient.Execute(request);
+
+            Console.WriteLine(email);
 
             UserProfile profile = ProfilesOps.GetProfileByEmail(email);
 
