@@ -55,5 +55,17 @@ namespace BusinessTier.Controllers
             }
             return BadRequest("User profile delete failed");
         }
+
+        // get all profiles
+        [HttpGet]
+        public IActionResult GetProfiles()
+        {
+            List<UserProfile> profiles = ProfilesOps.GetAll();
+            if (profiles != null)
+            {
+                return Ok(profiles);
+            }
+            return NotFound("No profiles in database");
+        }
     }
 }

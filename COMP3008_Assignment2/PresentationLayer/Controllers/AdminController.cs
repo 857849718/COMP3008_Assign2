@@ -34,5 +34,20 @@ namespace PresentationLayer.Controllers
             }
             return null;
         }
+
+        // method to retrieve list of users
+        private List<UserProfileIntermed> GetUsers()
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest("/api/user/getprofiles", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                return profiles;
+            }
+            return null;
+        }
     }
 }

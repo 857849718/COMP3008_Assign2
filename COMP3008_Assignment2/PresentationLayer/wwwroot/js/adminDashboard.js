@@ -1,7 +1,10 @@
 ﻿console.log("admin dashboard loaded");
 
-function test() {
-    console.log("clicked");
-    alert("HMMMM");
+/*
+    1.) Create table using document.createElement (append to last element)
+
+*/
+function loadAll() {
+    
 }
 
