@@ -57,6 +57,9 @@ namespace PresentationLayer.Controllers
 
             // get user account info
             UserProfileIntermed newProfile = GetProfileByEmail(email);
+            Console.WriteLine("retrieved email: " + newProfile.Email);
+            Console.WriteLine("retrieved password: " + newProfile.Password);
+
 
             if (newProfile != null)
             {
@@ -113,6 +116,46 @@ namespace PresentationLayer.Controllers
             return Json(auth);
         }
 
+        // transfer
+        [HttpPost("transfer")]
+        public IActionResult Transfer([FromBody] TransactionIntermed transaction)
+        {
+            // retrieve account info
+            var cookie = Request.Cookies["SessionID"];
+            UserProfileIntermed userProfile;
+            AccountIntermed account;
+            userProfile = GetProfileByEmail(sessions[cookie]);
+            Console.WriteLine("Transfer attempt by: " + userProfile.Email);
+            account = GetAccByAccNo(userProfile.AccountID);
+            Console.WriteLine("Acc id: " + account.AccountID + "\n");
+
+            // transaction details
+            double amount = transaction.Amount;
+            int srcAcc = account.AccountID;
+            int dstAcc = transaction.AccountID;
+            string description = transaction.Description;
+
+            // withdraw amount
+            var withdrawRequest = new RestRequest($"/api/transac/withdraw/{srcAcc}/{amount}/{description}", Method.Patch);
+            RestResponse withdrawResponse = RestClient.Execute(withdrawRequest);
+
+            // deposite amount
+            var depositeRequest = new RestRequest($"/api/transac/deposit/{dstAcc}/{amount}/{description}", Method.Patch);
+            RestResponse depositeResponse = RestClient.Execute(depositeRequest);
+
+            // response handling
+            var responseMsg = withdrawResponse.Content + "\n" + depositeResponse.Content;
+            var response = new { success = false, msg = responseMsg };
+            
+            if (withdrawResponse.IsSuccessful && depositeResponse.IsSuccessful)
+            {
+                response = new { success = true, msg = "Transfer successful." };
+                return Json(response);
+            }
+            Console.WriteLine("=======Error transfering=====\n" + responseMsg + "\n===============");
+            return Json(response);
+        }
+
         // private method: get account info
         private AccountIntermed GetAccByAccNo(int accNo)
         {
@@ -129,7 +172,7 @@ namespace PresentationLayer.Controllers
         }
 
         // private method: get user profile
-        public UserProfileIntermed GetProfileByEmail(string email)
+        private UserProfileIntermed GetProfileByEmail(string email)
         {
             var request = new RestRequest($"/api/user/get/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
@@ -137,7 +180,7 @@ namespace PresentationLayer.Controllers
             if (response.IsSuccessful)
             {
                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
-                return profile;
+               return profile;
             }
             return null;
         }
