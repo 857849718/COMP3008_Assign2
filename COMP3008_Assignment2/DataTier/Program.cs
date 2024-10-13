@@ -4,17 +4,17 @@ using DataTier.Models.DataSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
 DatabaseManager.CreateTables();
 
 if (AccountsOps.GetAll().Count() == 0)
 {
     RandomGenerator.Generate();
 }
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
