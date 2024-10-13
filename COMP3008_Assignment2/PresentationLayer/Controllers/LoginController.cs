@@ -15,6 +15,7 @@ namespace PresentationLayer.Controllers
         private static readonly Dictionary<string, string> sessions = new Dictionary<string, string>();
         private ProfileSingleton profileS;
 
+
         // show login form if no sessionID, user dashboard if logged in
         [HttpGet("ShowLoginForm")]
         public IActionResult ShowLoginForm()
@@ -22,14 +23,26 @@ namespace PresentationLayer.Controllers
             if (Request.Cookies.ContainsKey("SessionID"))
             {
                 var cookie = Request.Cookies["SessionID"];
+                UserProfileIntermed userProfile;
+                AccountIntermed account;
                 Console.WriteLine(cookie);
                 if (sessions.ContainsKey(cookie))
                 {
+                    // get account info
+                    userProfile = GetProfileByEmail(sessions[cookie]);
+                    Console.WriteLine(userProfile.Email);
+                    account = GetAccByAccNo(userProfile.AccountID);
+
                     Console.WriteLine("Showing user dashboard");
+                    ViewBag.fName = account.FirstName;
+                    ViewBag.lName = account.LastName;
+                    ViewBag.email = userProfile.Email;
+                    ViewBag.balance = account.Balance;
+
                     return PartialView("UserDashBoard");
                 }
             }
-
+            Console.WriteLine("Showing login form");
             return PartialView("LoginForm");
         }
 
@@ -46,7 +59,7 @@ namespace PresentationLayer.Controllers
             RestResponse response = client.Get(request);
             UserProfileIntermed newProfile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
 
-            Console.WriteLine(email);
+            // Console.WriteLine(email);
             var auth = new { auth = false, msg = "Account does not exist." };
 
             if (password.Trim() != newProfile.Password)
@@ -82,8 +95,8 @@ namespace PresentationLayer.Controllers
             return Json(auth);
         }
 
-        [HttpPost("GetAcc")]
-        public IActionResult GetAccByAccNo([FromBody] int accNo)
+        // private method: get account info
+        private AccountIntermed GetAccByAccNo(int accNo)
         {
             var request = new RestRequest($"/api/Acc/get/{accNo}", Method.Get);
             RestResponse response = RestClient.Execute(request);
@@ -91,10 +104,24 @@ namespace PresentationLayer.Controllers
             if (response.IsSuccessful)
             {
                 var account = JsonConvert.DeserializeObject<AccountIntermed>(response.Content);
-                return Ok(account);
+                return account;
             }
 
-            return StatusCode((int)response.StatusCode, response.Content);
+            return null;
+        }
+
+        // private method: get user profile
+        public UserProfileIntermed GetProfileByEmail(string email)
+        {
+            var request = new RestRequest($"/api/user/get/{email}", Method.Get);
+            RestResponse response = RestClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+               var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+                return profile;
+            }
+            return null;
         }
 
     }

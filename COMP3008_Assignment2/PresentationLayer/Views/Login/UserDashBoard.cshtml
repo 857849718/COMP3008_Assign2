@@ -1,7 +1,19 @@
-﻿<div id="userdashboard">
-    <p id="fName">First Name: </p>
-    <p id="lName">Last Name: </p>
-    <p id="email">Email: </p>
-    <p id="balance">Balance: </p>
+﻿@{
+    string fName = ViewBag.fName;
+    string lName = ViewBag.lName;
+    string email = ViewBag.email;
+    string balance = ViewBag.balance;
+}
 
+<div id="userdashboard">
+    <p id="fName">First Name: @fName</p>
+    <p id="lName">Last Name: @lName</p>
+    <p id="email">Email: @email</p>
+    <p id="balance">Balance: @balance</p>
+</div>
+
+<div id="transfer">
+    <input type="text" id="amount" name="amount" placeholder="amount"  />
+    <input type="text" id="accountID" name="accountID" placeholder="Recipient account ID"  />
+    <button type="button" id="SubmitButton" onclick="loadScript('/js/userDashBoard.js')">Transfer</button>
 </div>
