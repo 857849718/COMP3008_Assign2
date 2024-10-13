@@ -17,6 +17,19 @@ namespace DataTier.Models.DataSeeding
 
         public static void Generate()
         {
+            String adminFName = "Administrator";
+            String adminLName = " ";
+            String adminEmail = "admin@bankingsolutions.com";
+            String adminAddress = "Confidential";
+            int adminPhone = 74669087;
+            String adminPassword = "admin123";
+            Account adminAccount = new Account(0, adminFName, adminLName);
+            AccountsOps.Insert(adminAccount);
+
+            int adminAccountID = AccountsOps.GetAccountID();
+            UserProfile adminProfile = new UserProfile(adminFName, adminLName, adminEmail, adminAddress, adminPhone, adminPassword, adminAccountID);
+            ProfilesOps.Insert(adminProfile);
+
             for (int i = 0; i < 8; i++)
             {
                 int balance = getBalance();
