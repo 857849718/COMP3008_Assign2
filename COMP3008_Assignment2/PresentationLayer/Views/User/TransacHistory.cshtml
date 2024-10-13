@@ -1,0 +1,30 @@
+﻿@model List<Intermed.TransactionIntermed>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.Amount</td>
+                    <td>@transaction.Description</td>
+                    <td>@transaction.Time</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No transactions found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -67,27 +67,21 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("ShowTransacHistory")]
-        public IActionResult ShowTransacHistory(int accNo)
+        public IActionResult ShowTransacHistory()
         {
-            
-
             // get account info
             var cookie = Request.Cookies["SessionID"];
             UserProfileIntermed userProfile;
-            AccountIntermed account;
             userProfile = GetProfileByEmail(sessions[cookie]);
-            account = GetAccByAccNo(userProfile.AccountID);
 
             Console.WriteLine("Showing transaction history");
 
-            var request = new RestRequest($"/api/transac/{accNo}", Method.Get);
+            var request = new RestRequest($"/api/transac/{userProfile.AccountID}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
-            if (response.IsSuccessful)
-            {
-                List<TransactionIntermed> transacList = JsonConvert.DeserializeObject<TransactionIntermed>(response.Content);
-            }
+            List<TransactionIntermed> transacList = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
 
+            return PartialView("TransacHistory", transacList);
         }
 
         // login
