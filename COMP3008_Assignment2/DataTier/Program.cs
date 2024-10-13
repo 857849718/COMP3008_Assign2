@@ -9,6 +9,13 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+DatabaseManager.CreateTables();
+
+if (AccountsOps.GetAll().Count() == 0)
+{
+    RandomGenerator.Generate();
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
