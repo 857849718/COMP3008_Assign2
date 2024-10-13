@@ -38,14 +38,27 @@ function loadAll() {
             userTable.appendChild(passwordCol);
             userTable.appendChild(accountIDCol);
 
+            userTable.style.backgroundColor = "#69ffa6";
+            userTable.style.margin = "10px auto";
+            userTable.style.padding = "5px";
+            userTable.style.border = "2px solid #0f45a9";
+
             const endElement = document.getElementById("adminButtons");
             endElement.appendChild(userTable);
             data.forEach(user => {
                 const row = document.createElement("tr");
-                row.innerHTML =
-                    `<td>${user.firstName}</td><td>${user.lastName}</td><td>${user.email}</td><td>${user.address}</td><td>${user.phone}</td><td>${user.password}</td><td>${user.accountID}</td>`;
+                const userInfo = [user.firstName, user.lastName, user.email, user.address, user.phone, user.password, user.accountID];
+                userInfo.forEach(info => {
+                    const infoCell = document.createElement("td");
+                    infoCell.innerText = info;
+                    infoCell.style.border = "2px solid #0f45a9";
+                    infoCell.padding = "2px";
+                    infoCell.textAlign = "center";
+                    row.appendChild(infoCell);
+                })
                 userTable.appendChild(row);
             });
+
         })
         .catch(error => console.error("Error: ", error));
 }
