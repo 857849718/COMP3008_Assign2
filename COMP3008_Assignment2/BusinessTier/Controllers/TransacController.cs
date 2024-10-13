@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataTier.Database;
+using DataTier.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RestSharp;
+using System.Data.Entity;
 
 namespace BusinessTier.Controllers
 {
@@ -9,38 +10,95 @@ namespace BusinessTier.Controllers
     [ApiController]
     public class TransacController : ControllerBase
     {
-        private readonly RestClient RestClient = new RestClient("http://localhost:5185");
-
-        // Deposit
+        //deposit
         [HttpPatch]
         [Route("deposit/{accNo}/{amount}")]
-        public IActionResult Deposit(int accNo, double amount)
+        public IActionResult Deposit(int accNo, double amount, string description)
         {
-            var request = new RestRequest($"/api/Transac/deposit/{accNo}/{amount}", Method.Patch);
-            RestResponse response = RestClient.Execute(request);
+            // retrieving account data
+            Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
-            if (response.IsSuccessful)
+            Account accountNew = accountOld; // used to performing change
+            double startamount = accountOld.Balance;
+            double endamount;
+            Transaction transaction = new Transaction(amount, accNo, description, DateTime.Now.ToString());
+
+            // account info availability and input amount check
+            if (accountOld == null || amount <= 0)
             {
-                return Ok("Transaction successful");
+                return BadRequest("Transaction failed, account not found or invalid input");
             }
 
-            return StatusCode((int)response.StatusCode, response.Content);
-        }
+            // adding amount into account balance and updating entry in DB
+            accountNew.Balance += amount;
+            AccountsOps.Update(accountNew);
 
-        // Withdraw
+            // retrieving updated account balance
+            endamount = AccountsOps.GetAccountByID(accNo).Balance;
+
+            // verifying
+            if (!TransVeri(startamount, amount, endamount))
+            {
+                // if failed, revert change and return badrequest
+                AccountsOps.Update(accountOld);
+                return BadRequest("Transaction failed, database failed to be updated");
+            }
+
+            // saving transaction record
+            TransactionsOps.Insert(transaction);
+
+            return Ok("Transaction successful");
+        }
+        // withdrawal
         [HttpPatch]
         [Route("withdraw/{accNo}/{amount}")]
-        public IActionResult Withdraw(int accNo, double amount)
+        public IActionResult Withdraw(int accNo, double amount, string description)
         {
-            var request = new RestRequest($"/api/Transac/withdraw/{accNo}/{amount}", Method.Patch);
-            RestResponse response = RestClient.Execute(request);
+            // retrieving account data
+            Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
-            if (response.IsSuccessful)
+            Account accountNew = accountOld; // used to performing change
+            double startamount = accountOld.Balance;
+            double endamount;
+            Transaction transaction = new Transaction((amount * -1), accNo, description, DateTime.Now.ToString());
+
+            // account info availability and input amount check
+            if (accountOld == null || amount <= 0)
             {
-                return Ok("Transaction successful");
+                return BadRequest("Transaction failed, account not found or invalid input");
             }
 
-            return StatusCode((int)response.StatusCode, response.Content);
+            // adding amount into account balance and updating entry in DB
+            accountNew.Balance -= amount;
+            AccountsOps.Update(accountNew);
+
+            // retrieving updated account balance
+            endamount = AccountsOps.GetAccountByID(accNo).Balance;
+
+            // verifying
+            if (!TransVeri(startamount, amount, endamount))
+            {
+                // if failed, revert change and return badrequest
+                AccountsOps.Update(accountOld);
+                return BadRequest("Transaction failed, database failed to be updated");
+            }
+            // saving transaction record
+            TransactionsOps.Insert(transaction);
+
+            return Ok("Transaction successful");
         }
+
+        // verifying
+        private bool TransVeri(double startamount, double amount, double endamount)
+        {
+            return Math.Abs(startamount - endamount) == amount;
+        }
+
+        /*logging?
+        private void Log(string log)
+        {
+
+        }
+        */
     }
 }

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataTier.Database;
+using DataTier.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RestSharp;
-using Intermed;
 
 namespace BusinessTier.Controllers
 {
@@ -10,73 +9,53 @@ namespace BusinessTier.Controllers
     [ApiController]
     public class AccController : ControllerBase
     {
-        private readonly RestClient RestClient = new RestClient("http://localhost:5185");
+        //private readonly DatabaseManager DBManger;
 
-        // Create new bank account
+        //create new bank acc
         [HttpPost]
-        public IActionResult CreateAcc([FromBody] AccountIntermed acc)
+        public IActionResult CreateAcc([FromBody] Account acc)
         {
-            var request = new RestRequest("/api/Acc", Method.Post);
-            request.AddJsonBody(acc);
-
-            RestResponse response = RestClient.Execute(request);
-
-            if (response.IsSuccessful)
+            if (AccountsOps.Insert(acc))
             {
                 return Ok("Account successfully created");
             }
-
-            return StatusCode((int)response.StatusCode, response.Content);
+            return BadRequest("Account creation failed");
         }
 
-        // Retrieve account details by account number
-        [HttpGet]
+        //retrieve acc details by acc no.
         [Route("get/{accNo}")]
+        [HttpGet] //TODO: probably need to be post
         public IActionResult GetAccByAccNo(int accNo)
         {
-            var request = new RestRequest($"/api/Acc/get/{accNo}", Method.Get);
-            RestResponse response = RestClient.Execute(request);
-
-            if (response.IsSuccessful)
+            Console.WriteLine("accNo: "+accNo);
+            Account result = AccountsOps.GetAccountByID(accNo);
+            if(result != null)
             {
-                var account = JsonConvert.DeserializeObject<AccountIntermed>(response.Content);
-                return Ok(account);
+                Console.WriteLine(result.ToString());
+                return Ok(result);
             }
-
-            return StatusCode((int)response.StatusCode, response.Content);
+            return NotFound("Cannot find account");
         }
-
-        // Update account details
+        //update acc details
         [HttpPatch]
-        public IActionResult UpdateAcc([FromBody] AccountIntermed acc)
+        public IActionResult UpdateAcc([FromBody] Account acc)
         {
-            var request = new RestRequest("/api/Acc", Method.Patch);
-            request.AddJsonBody(acc);
-
-            RestResponse response = RestClient.Execute(request);
-
-            if (response.IsSuccessful)
+            if (AccountsOps.Update(acc))
             {
                 return Ok("Account detail update successful");
             }
-
-            return StatusCode((int)response.StatusCode, response.Content);
+            return BadRequest("Account detail update failed");
         }
-
-        // Delete account
+        //delete acc
         [HttpDelete]
-        [Route("{accNo}")]
         public IActionResult DeleteAcc(int accNo)
         {
-            var request = new RestRequest($"/api/Acc?accNo={accNo}", Method.Delete);
-            RestResponse response = RestClient.Execute(request);
-
-            if (response.IsSuccessful)
+            if (AccountsOps.Delete(accNo))
             {
                 return Ok("Account deleted");
             }
-
-            return StatusCode((int)response.StatusCode, response.Content);
+            return BadRequest("Account failed to delete");
         }
+
     }
 }
