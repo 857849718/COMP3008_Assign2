@@ -70,6 +70,13 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
             request = '/api/admin/getusersbyid/' + filterValue;
             console.log(request);
         }
+        else if (selectedFilter == "Last Name") {
+            console.log("Last Name selected");
+            filterValue = filterValue.trim();
+            console.log("Last Name chosen: " + filterValue);
+            request = '/api/admin/getusersbylastname/' + filterValue;
+            console.log(request);
+        }
     }
     fetch(request)
         .then(response => {
