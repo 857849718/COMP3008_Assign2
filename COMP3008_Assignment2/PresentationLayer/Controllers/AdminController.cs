@@ -88,8 +88,8 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
-                var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
-                return Ok(profiles);
+                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+                return Ok(profile);
             }
             return null;
         }

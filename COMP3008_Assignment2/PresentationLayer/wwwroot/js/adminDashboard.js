@@ -37,9 +37,13 @@ function loadAll() {
     filterBox.id = "filterBox";
     
     filterButton.onclick = () => {
+        clearDiv();
         const selectedFilter = filterBox.value;
         const filterValue = filterText.value;
-        loadUsers(userDiv, selectedFilter, filterValue);
+        const filteredUserDiv = document.createElement("div");
+        currentDiv = filteredUserDiv;
+        endElement.appendChild(filteredUserDiv);
+        loadUsers(filteredUserDiv, selectedFilter, filterValue);
     }
     userDiv.appendChild(filterText);
     userDiv.appendChild(filterButton);
@@ -48,14 +52,15 @@ function loadAll() {
 }
 
 function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
+    console.log("entry selected filter: " + selectedFilter);
     let request = '/api/admin/getusers'; // default -> will retrieve all users
     if (filterValue.trim() != "") {
         console.log("filter value not empty");
-        if (selectedFilter = "Email") {
+        if (selectedFilter == "Email") {
             console.log("Email selected");
             filterValue = filterValue.trim();
             console.log("Email chosen: " + filterValue);
-            request = '/api/admin/getuserbyemail/' + filterValue;
+            request = '/api/admin/' + filterValue;
             console.log(request);
         }
     }
@@ -63,10 +68,12 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response not ok');
+                alert("No records found for the selected filter!")
             }
             return response.json();
         })
         .then(data => {
+            const users = Array.isArray(data) ? data : [data]; // converts to array if not
             const userTable = document.createElement("table");
 
             const fNameCol = document.createElement("th");
@@ -98,7 +105,7 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
             userTable.style.border = "2px solid #0f45a9";
 
             userDiv.appendChild(userTable);
-            data.forEach(user => {
+            users.forEach(user => {
                 const row = document.createElement("tr");
                 const userInfo = [user.firstName, user.lastName, user.email, user.address, user.phone, user.password, user.accountID];
                 userInfo.forEach(info => {
