@@ -173,7 +173,49 @@ namespace DataTier.Database
             return profileList;
         }
 
-        public static List<UserProfile> GetProfileByEmail(string email)
+        public static UserProfile GetProfileByEmail(string email)
+        {
+            // initialize profile
+            UserProfile profile = null;
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // query to retrieve profile based on primary key
+                        command.CommandText = "SELECT * FROM Profiles WHERE Email = @Email";
+                        command.Parameters.AddWithValue("@Email", email);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                profile = new UserProfile(
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString(),
+                                    reader["Email"].ToString(),
+                                    reader["Address"].ToString(),
+                                    Convert.ToInt32(reader["Phone"]),
+                                    reader["Password"].ToString(),
+                                    Convert.ToInt32(reader["AccountID"])
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return profile;
+        }
+
+        public static List<UserProfile> GetProfilesByEmail(string email)
         {
             // initalize list of profiles
             List<UserProfile> profileList = new List<UserProfile>();
