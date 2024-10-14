@@ -128,5 +128,22 @@ namespace PresentationLayer.Controllers
             return null;
         }
 
+        // method to delete a user's profile
+        [HttpDelete]
+        [Route("delete/{email}")]
+        public IActionResult DeleteUser(string email)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user/{email}", Method.Delete);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var profile = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                return Ok(response);
+            }
+            return null;
+        }
+
     }
 }
