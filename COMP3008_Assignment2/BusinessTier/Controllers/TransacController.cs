@@ -123,5 +123,27 @@ namespace BusinessTier.Controllers
             }
             return null;
         }
+
+        // get all transactions
+        [HttpGet]
+        [Route("gettransactions")]
+        public IActionResult GetTransactions()
+        {
+            try
+            {
+                List<Transaction> transactions = TransactionsOps.GetAll();
+                if (transactions != null)
+                {
+                    return Ok(transactions);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
     }
 }

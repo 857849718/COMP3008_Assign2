@@ -145,7 +145,7 @@ function loadTransactions() {
 
             const endElement = document.getElementById("adminButtons");
             endElement.appendChild(transacDiv);
-            transacDiv.appendChild(transacTable);
+            endElement.appendChild(transacTable);
             data.forEach(transaction => {
                 const row = document.createElement("tr");
                 const transacInfo = [transaction.amount, transaction.accountID, transaction.description, transaction.time];
