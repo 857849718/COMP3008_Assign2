@@ -145,5 +145,6 @@ namespace BusinessTier.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
     }
 }
