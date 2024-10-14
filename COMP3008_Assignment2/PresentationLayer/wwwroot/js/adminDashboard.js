@@ -48,11 +48,12 @@ function loadAll() {
 }
 
 function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
-    let filter = "";
-    if (selectedFilter = "Email" && filterValue != "") {
-        filter = "Email ->" + filterValue;
+    let request = '/api/admin/getusers'; // default -> will retrieve all users
+    if (filterValue != null) {
+        if (selectedFilter = "Email") {
+            request = 
+        }
     }
-    let request = '/api/admin/getusers';
     fetch(request)
         .then(response => {
             if (!response.ok) {

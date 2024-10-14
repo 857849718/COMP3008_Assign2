@@ -76,5 +76,22 @@ namespace PresentationLayer.Controllers
             }
             return null;
         }
+
+        // method to retrieve list of transactions based on email
+        [HttpGet]
+        [Route("gettransactionsbyemail")]
+        public IActionResult GetTransactionsByEmail()
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest("/api/transac/gettransactionsbyemail", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+                return Ok(transactions);
+            }
+            return null;
+        }
     }
 }
