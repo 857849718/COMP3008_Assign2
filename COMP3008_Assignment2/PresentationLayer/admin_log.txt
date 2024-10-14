@@ -36,3 +36,4 @@ LOG NUMBER: 24 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 1
 LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:25:09 PM
 LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:25:14 PM
 LOG NUMBER: 2 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:25:20 PM
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:28:46 PM
