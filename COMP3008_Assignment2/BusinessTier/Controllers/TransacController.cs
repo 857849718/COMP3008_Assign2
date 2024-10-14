@@ -12,7 +12,7 @@ namespace BusinessTier.Controllers
     {
         //deposit
         [HttpPatch]
-        [Route("deposit/{accNo}/{amount}")]
+        [Route("deposit/{accNo}/{amount}/{description}")]
         public IActionResult Deposit(int accNo, double amount, string description)
         {
             // retrieving account data
@@ -51,7 +51,7 @@ namespace BusinessTier.Controllers
         }
         // withdrawal
         [HttpPatch]
-        [Route("withdraw/{accNo}/{amount}")]
+        [Route("withdraw/{accNo}/{amount}/{description}")]
         public IActionResult Withdraw(int accNo, double amount, string description)
         {
             // retrieving account data
