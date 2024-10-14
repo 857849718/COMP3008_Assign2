@@ -163,6 +163,7 @@ function modify(userInfo) {
     });
     modifyTable.appendChild(headerRow);
     const userRow = document.createElement("tr");
+    const newUserInfo = userInfo; // copy contents
     let accountID = userInfo[6];
     console.log(accountID);
     userInfo.pop(); // remove account ID as input (can't be changed)
@@ -197,13 +198,29 @@ function modify(userInfo) {
         const b = document.createElement("button");
         b.innerText = button;
         modifyDiv.appendChild(b);
-        b.onclick = () => modifyUser(b.innerText, email);
+        b.onclick = () => modifyUser(b.innerText, email, newUserInfo);
     });
 }
 
-function modifyUser(action, email) {
+function modifyUser(action, email, newUserInfo) {
     if (action = "Deactivate") {
         fetch('/api/admin/delete/' + email)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        clearDiv();
+    }
+    else if (action == "Update") {
+        fetch('/api/admin/update/' + newUserInfo)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response not ok');

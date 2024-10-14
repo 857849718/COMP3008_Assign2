@@ -144,5 +144,21 @@ namespace PresentationLayer.Controllers
             return null;
         }
 
+        // method to update a user's profile
+        [HttpPatch]
+        [Route("update/{profile}")]
+        public IActionResult UpdateUser(UserProfileIntermed profile)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user/{profile}", Method.Patch);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return null;
+        }
+
     }
 }
