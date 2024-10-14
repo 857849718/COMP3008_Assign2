@@ -2,7 +2,7 @@
 {
     public class AdminLogger
     {
-        static int logNumber = 0;
+        static int logNumber;
 
         // class to log admin activities
         public static void Log(string action, Boolean success)
