@@ -142,7 +142,40 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
 }
 
 function modify(userInfo) {
-    alert(userInfo[0]);
+    clearDiv();
+    const endElement = document.getElementById("adminButtons");
+    const modifyDiv = document.createElement("div");
+    currentDiv = modifyDiv;
+    endElement.appendChild(modifyDiv);
+    const modifyTable = document.createElement("table");
+    modifyTable.style.backgroundColor = "#69ffa6";
+    modifyTable.style.margin = "10px auto";
+    modifyTable.style.padding = "5px";
+    modifyTable.style.border = "2px solid #0f45a9";
+    modifyDiv.appendChild(modifyTable);
+    const headers = ["First Name", "Last Name", "Email", "Address", "Phone", "Password", "Account ID"];
+    const headerRow = document.createElement("tr");
+    headers.forEach(header => {
+        const th = document.createElement("th");
+        th.innerText = header;
+        th.style.textAlign = "center";
+        headerRow.appendChild(th);
+    });
+    modifyTable.appendChild(headerRow);
+    const userRow = document.createElement("tr");
+    userInfo.forEach(data => {
+        const modifyData = document.createElement("input")
+        modifyData.type = "text";
+        modifyData.value = data;
+        modifyData.style.border = "2px solid #0f45a9";
+        modifyData.padding = "2px";
+        modifyData.textAlign = "center";
+        const td = document.createElement("td");
+        td.appendChild(modifyData);
+        userRow.append(td);
+    });
+    modifyTable.appendChild(userRow);
+            
 }
 
 
