@@ -88,6 +88,7 @@ namespace BusinessTier.Controllers
         [Route("{email}")]
         public IActionResult DeleteProfile(string email)
         {
+            Console.WriteLine(email);
             if(ProfilesOps.Delete(email))
             {
                 return Ok("User profile successfully deleted");

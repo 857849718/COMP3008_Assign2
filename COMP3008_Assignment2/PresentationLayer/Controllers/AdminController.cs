@@ -139,7 +139,6 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
-                var profile = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 return Ok(response);
             }
             return null;

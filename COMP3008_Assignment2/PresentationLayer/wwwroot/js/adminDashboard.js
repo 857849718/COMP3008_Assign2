@@ -197,12 +197,27 @@ function modify(userInfo) {
         const b = document.createElement("button");
         b.innerText = button;
         modifyDiv.appendChild(b);
-        b.onclick = () => modifyUser();
+        b.onclick = () => modifyUser(b.innerText, email);
     });
 }
 
-function modifyUser() {
-
+function modifyUser(action, email) {
+    if (action = "Deactivate") {
+        fetch('/api/admin/delete/' + email)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        clearDiv();
+    }
 }
 
 
