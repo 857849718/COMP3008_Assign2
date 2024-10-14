@@ -248,15 +248,15 @@ namespace PresentationLayer.Controllers
         }
 
         // private method: get user profile
-        private UserProfileIntermed GetProfileByEmail(string email)
+        private List<UserProfileIntermed> GetProfileByEmail(string email)
         {
             var request = new RestRequest($"/api/user/{email}", Method.Get);
             RestResponse response = RestClient.Execute(request);
 
             if (response.IsSuccessful)
             {
-               var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
-               return profile;
+               var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+               return profiles;
             }
             return null;
         }
