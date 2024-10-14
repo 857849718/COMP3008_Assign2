@@ -79,7 +79,7 @@ namespace PresentationLayer.Controllers
 
         // method to retrieve list of users based on email
         [HttpGet]
-        [Route("getuserbyemail/{email}")]
+        [Route("{email}")]
         public IActionResult GetUsersByEmail(string email)
         {
             RestClient restClient = new RestClient("http://localhost:5186");
@@ -88,8 +88,8 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
-                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
-                return Ok(profile);
+                var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                return Ok(profiles);
             }
             return null;
         }
