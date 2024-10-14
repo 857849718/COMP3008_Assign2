@@ -132,7 +132,7 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
                 })
                 const selectUser = document.createElement("button");
                 selectUser.innerText = "Modify";
-                selectUser.onclick = () => modify(userInfo);
+                selectUser.onclick = () => modify(userInfo, false);
                 row.appendChild(selectUser);
                 userTable.appendChild(row);
             });
@@ -141,7 +141,51 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
         .catch(error => console.error("Error: ", error));
 }
 
-function modify(userInfo) {
+function createUser() {
+    clearDiv();
+    const endElement = document.getElementById("adminButtons");
+    const createDiv = document.createElement("div");
+    currentDiv = createDiv;
+    endElement.appendChild(createDiv);
+    const createTable = document.createElement("table");
+    createTable.style.backgroundColor = "#69ffa6";
+    createTable.style.margin = "10px auto";
+    createTable.style.padding = "5px";
+    createTable.style.border = "2px solid #0f45a9";
+    createDiv.appendChild(createTable);
+    const headers = ["First Name", "Last Name", "Address", "Phone", "Password", "Email"];
+    const headerRow = document.createElement("tr");
+    headers.forEach(header => {
+        const th = document.createElement("th");
+        th.innerText = header;
+        th.style.textAlign = "center";
+        headerRow.appendChild(th);
+    });
+    createTable.appendChild(headerRow);
+    const createRow = document.createElement("tr");
+    createRow.id = "createRow";
+
+    const placeholders = ["First Name", "Last Name", "Address", "Phone", "Password", "Email"];
+    placeholders.forEach(p => {
+        const createData = document.createElement("input")
+        createData.type = "text";
+        createData.placeholder = p;
+        createData.style.border = "2px solid #0f45a9";
+        createData.padding = "2px";
+        createData.textAlign = "center";
+        const td = document.createElement("td");
+        td.appendChild(createData);
+        createRow.append(td);
+    });
+    createTable.appendChild(createRow);
+
+    const createButton = document.createElement("button");
+    createButton.innerText = "Create User";
+    createButton.textAlign = "center";
+    createDiv.appendChild(createButton);
+}
+
+function modify(userInfo, flag) {
     clearDiv();
     const endElement = document.getElementById("adminButtons");
     const modifyDiv = document.createElement("div");
