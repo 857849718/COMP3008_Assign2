@@ -56,4 +56,33 @@ function loginAuthentication() {
     const loginAPI = "api/user/authenticate";
 }
 
+function logOut() {
+    const request = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+
+    fetch('/api/user/logout', request)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response not ok');
+            }
+            return response.json();
+        })
+        .then(response => {
+            if (response.success) {
+                alert(response.msg);
+                window.location.reload();
+            }
+            else {
+                alert(response.msg);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+}
+
 document.addEventListener("DOMContentLoaded", loadLoginForm);
