@@ -96,7 +96,7 @@ namespace PresentationLayer.Controllers
 
         // method to retrieve list of users based on id
         [HttpGet]
-        [Route("/getusersbyid/{id}")]
+        [Route("getusersbyid/{id}")]
         public IActionResult GetUsersById(int id)
         {
             RestClient restClient = new RestClient("http://localhost:5186");
@@ -105,7 +105,7 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
-                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+                var profile = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 return Ok(profile);
             }
             return null;
