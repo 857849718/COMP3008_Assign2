@@ -5,6 +5,7 @@ using RestSharp;
 using Intermed;
 using PresentationLayer.Models;
 using System.Net;
+using System.ComponentModel.DataAnnotations;
 
 namespace PresentationLayer.Controllers
 {
@@ -63,6 +64,24 @@ namespace PresentationLayer.Controllers
             ViewBag.address = userProfile.Address;
 
             return PartialView("UpdateInfoForm");
+        }
+
+        [HttpGet("ShowTransacHistory")]
+        public IActionResult ShowTransacHistory()
+        {
+            // get account info
+            var cookie = Request.Cookies["SessionID"];
+            UserProfileIntermed userProfile;
+            userProfile = GetProfileByEmail(sessions[cookie]);
+
+            Console.WriteLine("Showing transaction history");
+
+            var request = new RestRequest($"/api/transac/{userProfile.AccountID}", Method.Get);
+            RestResponse response = RestClient.Execute(request);
+
+            List<TransactionIntermed> transacList = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+
+            return PartialView("TransacHistory", transacList);
         }
 
         // login
@@ -172,6 +191,46 @@ namespace PresentationLayer.Controllers
             Console.WriteLine("=======Error transfering=====\n" + responseMsg + "\n===============");
             return Json(response);
         }
+
+        // update user info
+        [HttpPost("updateUserInfo")]
+        public IActionResult updateUserInfo([FromBody] UserProfileIntermed profile)
+        {
+            // retrieving account info
+            UserProfileIntermed userProfile;
+            AccountIntermed account;
+            var cookie = Request.Cookies["SessionID"];
+            userProfile = GetProfileByEmail(sessions[cookie]);
+            account = GetAccByAccNo(userProfile.AccountID);
+
+            // submitting request
+            var request = new RestRequest("/api/user/", Method.Patch);
+
+            var newProfile = new
+            {
+                Password = profile.Password,
+                Phone = profile.Phone,
+                Address = profile.Address,
+                Email = sessions[cookie],
+                FirstName = account.FirstName,
+                LastName = account.LastName
+            };
+            request.AddJsonBody(newProfile);
+            var response = RestClient.Execute(request);
+
+            // response handling
+            var update = new { success = false, msg = "Update failed." };
+            if (response.IsSuccessful)
+            {
+                update = new { success = true, msg = "Update successful." };
+                return Json(update);
+            }
+
+            return Json(update);        
+        }
+
+
+        
 
         // private method: get account info
         private AccountIntermed GetAccByAccNo(int accNo)

@@ -12,13 +12,13 @@ namespace BusinessTier.Controllers
     {
         //deposit
         [HttpPatch]
-        [Route("deposit/{accNo}/{amount}/{description}")]
+        [Route("deposit/{accNo}/{amount}")]
         public IActionResult Deposit(int accNo, double amount, string description)
         {
             // retrieving account data
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
-            Account accountNew = AccountsOps.GetAccountByID(accNo); // used to performing change
+            Account accountNew = accountOld; // used to performing change
             double startamount = accountOld.Balance;
             double endamount;
             Transaction transaction = new Transaction(amount, accNo, description, DateTime.Now.ToString());
@@ -51,13 +51,13 @@ namespace BusinessTier.Controllers
         }
         // withdrawal
         [HttpPatch]
-        [Route("withdraw/{accNo}/{amount}/{description}")]
+        [Route("withdraw/{accNo}/{amount}")]
         public IActionResult Withdraw(int accNo, double amount, string description)
         {
             // retrieving account data
             Account accountOld = AccountsOps.GetAccountByID(accNo); // backup point
 
-            Account accountNew = AccountsOps.GetAccountByID(accNo); ; // used to performing change
+            Account accountNew = accountOld; // used to performing change
             double startamount = accountOld.Balance;
             double endamount;
             Transaction transaction = new Transaction((amount * -1), accNo, description, DateTime.Now.ToString());
@@ -94,6 +94,8 @@ namespace BusinessTier.Controllers
             return Math.Abs(startamount - endamount) == amount;
         }
 
+
+
         [HttpPost]
         public IActionResult Post(DataTier.Models.Transaction transaction)
         {
@@ -111,17 +113,15 @@ namespace BusinessTier.Controllers
             }
         }
 
-        // get all transactions
-        [HttpGet]
-        [Route("gettransactions")]
-        public IActionResult GetTransactions()
+        // get transaction list by accoundID
+        [HttpGet("{accNo}")]
+        public IEnumerable<Transaction> GetTransactionList(int accNo)
         {
-            List<Transaction> transactions = TransactionsOps.GetAll();
-            if (transactions != null)
+            if (TransactionsOps.GetTransactionsByID(accNo) != null)
             {
-                return Ok(transactions);
+                return TransactionsOps.GetTransactionsByID(accNo);
             }
-            return NotFound("No transactions in database");
+            return null;
         }
     }
 }
