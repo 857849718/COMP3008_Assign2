@@ -25,12 +25,12 @@ namespace BusinessTier.Controllers
         [Route("{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
-            UserProfile profile = ProfilesOps.GetProfileByEmail(email);
-            if (profile != null)
+            List<UserProfile> profiles = ProfilesOps.GetProfileByEmail(email);
+            if (profiles != null)
             {
-                return Ok(profile);
+                return Ok(profiles);
             }
-            return NotFound("User profile not found");
+            return NotFound($"No profiles in database matching {email}");
         }
 
         // update profile
