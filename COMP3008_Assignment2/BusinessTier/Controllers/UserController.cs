@@ -25,7 +25,20 @@ namespace BusinessTier.Controllers
         [Route("{email}")]
         public IActionResult GetProfileByEmail(string email)
         {
-            List<UserProfile> profiles = ProfilesOps.GetProfileByEmail(email);
+            UserProfile profile = ProfilesOps.GetProfileByEmail(email);
+            if (profile != null)
+            {
+                return Ok(profile);
+            }
+            return NotFound($"No profiles in database matching {email}");
+        }
+
+        // retrieve LIST of user profiles by email
+        [HttpGet]
+        [Route("getprofiles/{email}")]
+        public IActionResult GetProfilesByEmail(string email)
+        {
+            List<UserProfile> profiles = ProfilesOps.GetProfilesByEmail(email);
             if (profiles != null)
             {
                 return Ok(profiles);
