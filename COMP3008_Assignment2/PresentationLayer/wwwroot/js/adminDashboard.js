@@ -175,7 +175,13 @@ function modify(userInfo) {
         userRow.append(td);
     });
     modifyTable.appendChild(userRow);
-            
+
+    const buttons = ["Update", "Deactivate"];
+    buttons.forEach(button => {
+        const b = document.createElement("button");
+        b.innerText = button;
+        modifyDiv.appendChild(b);
+    });
 }
 
 
