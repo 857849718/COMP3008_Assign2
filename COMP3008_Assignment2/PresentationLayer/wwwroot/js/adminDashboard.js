@@ -1,9 +1,5 @@
 ﻿console.log("admin dashboard loaded");
 
-/*
-    1.) Create table using document.createElement (append to last element)
-
-*/
 let currentDiv = null;
 
 function clearDiv() {
@@ -359,9 +355,47 @@ function modifyUser(action, email) {
     }
 }
 
-
-function loadTransactions() {
+function transactionEntry() {
     clearDiv();
+    const transacDiv = document.createElement("div");
+    const filterBox = document.createElement("select");
+    filterBox.innerText = "Filter Transactions By:";
+    currentDiv = transacDiv;
+
+    const endElement = document.getElementById("adminButtons");
+    const filterText = document.createElement("input");
+    filterText.type = "text";
+    filterText.placeholder = "Value";
+    filterText.id = "filterText";
+    endElement.appendChild(transacDiv);
+    transacDiv.appendChild(filterBox);
+    const filterChoices = ["Minimum Withdraw", "Minimum Deposit", "Account ID"];
+    filterChoices.forEach(choice => {
+        const option = document.createElement("option");
+        option.value = choice;
+        option.innerText = choice;
+        filterBox.appendChild(option);
+    });
+    const filterButton = document.createElement("button");
+    filterButton.innerText = "Filter";
+    filterBox.id = "filterBox";
+
+    filterButton.onclick = () => {
+        clearDiv();
+        const selectedFilter = filterBox.value;
+        const filterValue = filterText.value;
+        const filteredTransacDiv = document.createElement("div");
+        currentDiv = filteredTransacDiv;
+        endElement.appendChild(filteredTransacDiv);
+        loadTransactions(filteredTransacDiv, selectedFilter, filterValue);
+    }
+    transacDiv.appendChild(filterText);
+    transacDiv.appendChild(filterButton);
+
+    loadTransactions(transacDiv);
+}
+
+function loadTransactions(transacDiv) {
     fetch('/api/admin/gettransactions')
         .then(response => {
             if (!response.ok) {
@@ -370,9 +404,7 @@ function loadTransactions() {
             return response.json();
         })
         .then(data => {
-            const transacDiv = document.createElement("div");
             const transacTable = document.createElement("table");
-            currentDiv = transacDiv;
 
             const amountCol = document.createElement("th");
             amountCol.innerText = "Amount";
@@ -393,8 +425,6 @@ function loadTransactions() {
             transacTable.style.padding = "5px";
             transacTable.style.border = "2px solid #0f45a9";
 
-            const endElement = document.getElementById("adminButtons");
-            endElement.appendChild(transacDiv);
             transacDiv.appendChild(transacTable);
             data.forEach(transaction => {
                 const row = document.createElement("tr");
