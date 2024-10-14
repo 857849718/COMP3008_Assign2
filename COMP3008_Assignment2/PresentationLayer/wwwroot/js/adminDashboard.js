@@ -107,10 +107,10 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
 
             userTable.appendChild(fNameCol);
             userTable.appendChild(lNameCol);
-            userTable.appendChild(emailCol);
             userTable.appendChild(addressCol);
             userTable.appendChild(phoneCol);
             userTable.appendChild(passwordCol);
+            userTable.appendChild(emailCol);
             userTable.appendChild(accountIDCol);
 
             userTable.style.backgroundColor = "#69ffa6";
@@ -163,7 +163,8 @@ function modify(userInfo) {
     });
     modifyTable.appendChild(headerRow);
     const userRow = document.createElement("tr");
-    const newUserInfo = userInfo; // copy contents
+    userRow.id = "userRow";
+    const newUserInfo = [userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5]];
     let accountID = userInfo[6];
     console.log(accountID);
     userInfo.pop(); // remove account ID as input (can't be changed)
@@ -188,6 +189,7 @@ function modify(userInfo) {
         temp.padding = "2px";
         temp.textAlign = "center";
         temp.innerText = member;
+        temp.id = member;
         userRow.append(temp);
     });
     
@@ -198,12 +200,22 @@ function modify(userInfo) {
         const b = document.createElement("button");
         b.innerText = button;
         modifyDiv.appendChild(b);
-        b.onclick = () => modifyUser(b.innerText, email, newUserInfo);
+        b.onclick = () => modifyUser(b.innerText, email);
     });
 }
 
-function modifyUser(action, email, newUserInfo) {
-    if (action = "Deactivate") {
+function modifyUser(action, email) {
+    const row = document.getElementById("userRow");
+    const rowCells = row.querySelectorAll("td");
+    const rowArray = Array.from(rowCells).map(cell => {
+        const input = cell.querySelector('input');
+        return input ? input.value : cell.textContent; 
+    });
+    rowArray.forEach(info => {
+        console.log(info);
+    });
+    if (action == "Deactivate") {
+        console.log("Deactivate chosen");
         fetch('/api/admin/delete/' + email)
             .then(response => {
                 if (!response.ok) {
@@ -220,7 +232,23 @@ function modifyUser(action, email, newUserInfo) {
         clearDiv();
     }
     else if (action == "Update") {
-        fetch('/api/admin/update/' + newUserInfo)
+        console.log("Update chosen")
+        const userProfile = {
+            firstName: rowArray[0],
+            lastName: rowArray[1],
+            address: rowArray[2],
+            phone: rowArray[3],
+            password: rowArray[4],
+            email: email
+        };
+
+        fetch('/api/admin/update', {
+            method: 'PATCH', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userProfile) 
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response not ok');

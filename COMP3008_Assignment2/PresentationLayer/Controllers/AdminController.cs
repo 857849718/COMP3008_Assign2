@@ -146,11 +146,12 @@ namespace PresentationLayer.Controllers
 
         // method to update a user's profile
         [HttpPatch]
-        [Route("update/{profile}")]
-        public IActionResult UpdateUser(UserProfileIntermed profile)
+        [Route("update")]
+        public IActionResult UpdateUser([FromBody] UserProfileIntermed profile)
         {
             RestClient restClient = new RestClient("http://localhost:5186");
-            var request = new RestRequest($"/api/user/{profile}", Method.Patch);
+            var request = new RestRequest($"/api/user/", Method.Patch);
+            request.AddJsonBody(profile);
             RestResponse response = restClient.Execute(request);
 
             if (response.IsSuccessful)
