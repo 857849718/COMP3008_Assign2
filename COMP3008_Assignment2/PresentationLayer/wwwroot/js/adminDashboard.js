@@ -67,7 +67,7 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
             console.log("Account ID selected");
             filterValue = filterValue.trim();
             console.log("Account ID chosen: " + filterValue);
-            request = '/api/admin/' + filterValue;
+            request = '/api/admin/getusersbyid/' + filterValue;
             console.log(request);
         }
     }

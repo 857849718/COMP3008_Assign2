@@ -94,5 +94,22 @@ namespace PresentationLayer.Controllers
             return null;
         }
 
+        // method to retrieve list of users based on id
+        [HttpGet]
+        [Route("/getusersbyid/{id}")]
+        public IActionResult GetUsersById(int id)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user/getprofilesbyid/{id}", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
+                return Ok(profile);
+            }
+            return null;
+        }
+
     }
 }
