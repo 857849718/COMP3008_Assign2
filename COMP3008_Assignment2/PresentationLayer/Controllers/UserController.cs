@@ -84,6 +84,49 @@ namespace PresentationLayer.Controllers
             return PartialView("TransacHistory", transacList);
         }
 
+
+        [HttpPost("ShowTransacHistoryWithFilter/{startDate}/{endDate}")]
+        public IActionResult ShowTransacHistoryWithFilter(string startDate, string endDate)
+        {
+            // get account info
+            var cookie = Request.Cookies["SessionID"];
+            UserProfileIntermed userProfile;
+            userProfile = GetProfileByEmail(sessions[cookie]);
+
+            // parse dates
+            DateTime.TryParse(startDate, out DateTime parsedStartDate);
+            DateTime.TryParse(endDate, out DateTime parsedEndDate);
+
+            Console.WriteLine("Showing transaction history");
+
+            var request = new RestRequest($"/api/transac/{userProfile.AccountID}", Method.Get);
+            RestResponse response = RestClient.Execute(request);
+
+            // converting and storing deserialized list
+            List<TransactionIntermed> transacListTemp = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+
+            List<TransactionIntermed> transacList = new List<TransactionIntermed>();
+
+            Console.WriteLine("start date: " + parsedStartDate + " end date: " + parsedEndDate);
+            // covert string type date to DateTime type
+            foreach (var transac in transacListTemp)
+            {
+                if (DateTime.TryParse(transac.Time, out DateTime parsedTime))
+                {
+                    Console.WriteLine("parsed date: " + parsedTime);
+                    if (parsedTime >= parsedStartDate && parsedTime <= parsedEndDate)
+                    {
+                        transacList.Add(transac);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to parse time");
+                }
+            }
+            return PartialView("TransacHistory", transacList);
+        }
+
         // login
         [HttpPost("Login")]
         public IActionResult Login([FromBody] Profile profile)

@@ -47,6 +47,11 @@ function updateUserInfo() {
     var phoneNew = document.getElementById('phone').value;
     var addressNew = document.getElementById('address').value;
 
+    if (passwordNew == "" && phoneNew == "" && addressNew == "") {
+        alert("Invalid input");
+        return;
+    }
+
     if (passwordNew == "") {
         passwordNew = document.getElementById('password').getAttribute('placeholder');
     }
@@ -86,6 +91,46 @@ function updateUserInfo() {
             else {
                 alert(response.msg);
             }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+}
+
+function ShowTransacHistoryWithFilter() {
+    var startDate = document.getElementById('startDate').value;
+    var endDate = document.getElementById('endDate').value;
+
+    startDate = new Date(startDate).toISOString();
+    endDate = new Date(endDate).toISOString();
+
+    if (startDate > endDate || startDate == "" || endDate == "") {
+        alert("Invalid date range.");
+    }
+
+    console.log("startdate: " + startDate + " enddate: " + endDate);
+
+    var data = {
+        startDate: startDate,
+        endDate: endDate
+    };
+
+    const request = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    fetch('/api/user/ShowTransacHistoryWithFilter/' + startDate + "/" + endDate, request)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById("main").innerHTML = data;
         })
         .catch(error => {
             console.error('Fetch error:', error);
