@@ -195,6 +195,19 @@ namespace PresentationLayer.Controllers
             return Json(auth);
         }
 
+        [HttpPost("logout")]
+        public IActionResult Transfer()
+        {
+            var sessionID = Request.Cookies["SessionID"];
+            var Response = new { success = false, msg = "Failed to logout."};
+            if (sessionID != null)
+            {
+                sessions.Remove(sessionID);
+                Response = new { success = true, msg = "Successfully logged out." };
+            }
+            return Json(Response);
+        }
+
         // transfer
         [HttpPost("transfer")]
         public IActionResult Transfer([FromBody] TransactionIntermed transaction)
