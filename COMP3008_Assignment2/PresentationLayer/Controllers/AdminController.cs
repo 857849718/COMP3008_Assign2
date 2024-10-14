@@ -6,6 +6,7 @@ using PresentationLayer.Models;
 using RestSharp;
 using System.Security.Principal;
 using BusinessTier.Models;
+using DataTier.Models;
 
 namespace PresentationLayer.Controllers
 {
@@ -37,10 +38,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Profile By Email {email}", true);
                 var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
                 return profile;
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Profile By Email {email}", false);
+                return null;
+            }
         }
 
         // method to retrieve list of users
@@ -54,12 +60,17 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log("Retrieve All Users", true);
                 var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 return Ok(profiles);
                 //List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 //return profiles;
             }
-            return null;
+            else
+            {
+                AdminLogger.Log("Retrieve All Users", false);
+                return null;
+            }
         }
 
         // method to retrieve list of transactions
@@ -73,12 +84,17 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log("Retrieve All Transactions", true);
                 var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
                 return Ok(transactions);
                 //List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 //return profiles;
             }
-            return null;
+            else
+            {
+                AdminLogger.Log("Retrieve All Transactions", false);
+                return null;
+            }
         }
 
         // method to retrieve list of users based on email
@@ -92,10 +108,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Users By Email {email}", true);
                 var profile = JsonConvert.DeserializeObject<UserProfileIntermed>(response.Content);
                 return Ok(profile);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Users By Email {email}", false);
+                return null;
+            }
         }
 
         // method to retrieve list of users based on id
@@ -109,13 +130,18 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Users By ID {id}", true);
                 var profile = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 return Ok(profile);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Users By ID {id}", false);
+                return null;
+            }
         }
 
-        // method to retrieve list of users based on id
+        // method to retrieve list of users based on last name
         [HttpGet]
         [Route("getusersbylastname/{lastName}")]
         public IActionResult GetUsersByLastName(string lastName)
@@ -126,10 +152,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Users By Last Name {lastName}", true);
                 var profile = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
                 return Ok(profile);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Users By Last Name {lastName}", false);
+                return null;
+            }
         }
 
         // method to delete a user's profile
@@ -144,9 +175,14 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Delete User By Email {email}", true);
                 return Ok(response);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Delete User By Email {email}", false);
+                return null;
+            }
         }
 
         // method to update a user's profile
@@ -161,9 +197,14 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Update User {profile.Email}", true);
                 return Ok(response);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Update User {profile.Email}", false);
+                return null;
+            }
         }
 
         // method to create a new account
@@ -184,10 +225,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log("Create User", true);
                 CreateProfile(createUser);
                 return Ok(response);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log("Create User", false);
+                return null;
+            }
         }
 
         private IActionResult CreateProfile(CreateUserIntermed createUser)
@@ -241,10 +287,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Transaction By Minimum Withdraw {amount}", true);
                 var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
                 return Ok(transactions);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Transaction By Minimum Withdraw {amount}", false);
+                return null;
+            }
         }
 
         // method to retrieve list of transactions based on min deposit
@@ -258,10 +309,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Transaction By Minimum Deposit {amount}", true);
                 var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
                 return Ok(transactions);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Transaction By Minimum Deposit {amount}", false);
+                return null;
+            }
         }
 
         // method to retrieve list of transactions based on account ID
@@ -275,10 +331,15 @@ namespace PresentationLayer.Controllers
 
             if (response.IsSuccessful)
             {
+                AdminLogger.Log($"Retrieve Transaction By Account ID {id}", true);
                 var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
                 return Ok(transactions);
             }
-            return null;
+            else
+            {
+                AdminLogger.Log($"Retrieve Transaction By Account ID {id}", false);
+                return null;
+            }
         }
 
     }

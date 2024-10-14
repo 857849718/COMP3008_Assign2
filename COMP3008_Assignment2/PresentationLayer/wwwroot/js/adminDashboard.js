@@ -380,6 +380,31 @@ function transactionEntry() {
     filterButton.innerText = "Filter";
     filterBox.id = "filterBox";
 
+    //const sortBox = document.createElement("select");
+    //sortBox.innerText = "Sort Transactions By:";
+    //transacDiv.appendChild(sortBox);
+    //const sortChoices = ["Date/Time ASC", "Date/Time DESC", "Amount ASC", "Amount DESC"];
+    //sortChoices.forEach(choice => {
+    //    const option = document.createElement("option");
+    //    option.value = choice;
+    //    option.innerText = choice;
+    //    sortBox.appendChild(option);
+    //});
+    //const sortButton = document.createElement("button");
+    //sortButton.innerText = "Sort";
+    //sortButton.id = "sortBox";
+
+    //sortButton.onclick = () => {
+    //    clearDiv();
+    //    const selectedSort = sortBox.value();
+    //    const selectedFilter = filterBox.value;
+    //    const filterValue = filterText.value;
+    //    const filteredTransacDiv = document.createElement("div");
+    //    currentDiv = filteredTransacDiv;
+    //    endElement.appendChild(filteredTransacDiv);
+    //    loadTransactions(filteredTransacDiv, selectedFilter, filterValue, selectedSort);
+    //}
+
     filterButton.onclick = () => {
         clearDiv();
         const selectedFilter = filterBox.value;
@@ -391,6 +416,7 @@ function transactionEntry() {
     }
     transacDiv.appendChild(filterText);
     transacDiv.appendChild(filterButton);
+    transacDiv.appendChild(sortButton);
 
     loadTransactions(transacDiv);
 }
@@ -451,6 +477,19 @@ function loadTransactions(transacDiv, selectedFilter = "", filterValue = "") {
             transacTable.style.border = "2px solid #0f45a9";
 
             transacDiv.appendChild(transacTable);
+
+            //if (selectedSort == "Date/Time ASC") {
+            //    data.sort(timeAsc);
+            //}
+            //else if (selectedSort == "Date/Time DESC") {
+            //    data.sort(timeDesc);
+            //}
+            //else if (selectedSort == "Amount ASC") {
+            //    data.sort(amountAsc);
+            //}
+            //else if (selectedSort == "Amount DESC") {
+            //    data.sort(amountDesc);
+            //}
             data.forEach(transaction => {
                 const row = document.createElement("tr");
                 const transacInfo = [transaction.amount, transaction.accountID, transaction.description, transaction.time];
@@ -467,5 +506,57 @@ function loadTransactions(transacDiv, selectedFilter = "", filterValue = "") {
 
         })
         .catch(error => console.error("Error: ", error));
+}
+
+function timeAsc(a, b) {
+    const timeA = a.time;
+    const timeB = b.time;
+
+    let c = 0;
+    if (timeA > timeB) {
+        c = 1;
+    } else if (timeA < timeB) {
+        c = -1;
+    }
+    return c;
+}
+
+function timeDesc(a, b) {
+    const timeA = a.time;
+    const timeB = b.time;
+
+    let c = 0;
+    if (timeA > timeB) {
+        c = 1;
+    } else if (timeA < timeB) {
+        c = -1;
+    }
+    return c * -1;
+}
+
+function amountAsc(a, b) {
+    const amountA = a.amount;
+    const amountB = b.amount;
+
+    let c = 0;
+    if (amountA > amountB) {
+        c = 1;
+    } else if (amountA < amountB) {
+        c = -1;
+    }
+    return c;
+}
+
+function amountDesc(a, b) {
+    const amountA = a.amount;
+    const amountB = b.amount;
+
+    let c = 0;
+    if (amountA > amountB) {
+        c = 1;
+    } else if (amountA < amountB) {
+        c = -1;
+    }
+    return c * -1;
 }
 
