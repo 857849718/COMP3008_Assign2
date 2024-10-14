@@ -216,10 +216,15 @@ function modifyUser(action, email) {
     });
     if (action == "Deactivate") {
         console.log("Deactivate chosen");
-        fetch('/api/admin/delete/' + email)
+        let request = '/api/admin/delete/' + email;
+        console.log("request: " + request);
+        fetch(request, {
+            method: 'DELETE',
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response not ok');
+                    console.log(response.json);
                 }
                 return response.json();
             })

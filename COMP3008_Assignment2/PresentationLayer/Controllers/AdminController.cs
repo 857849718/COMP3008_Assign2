@@ -133,6 +133,7 @@ namespace PresentationLayer.Controllers
         [Route("delete/{email}")]
         public IActionResult DeleteUser(string email)
         {
+            Console.WriteLine($"email to delete: {email}");
             RestClient restClient = new RestClient("http://localhost:5186");
             var request = new RestRequest($"/api/user/{email}", Method.Delete);
             RestResponse response = restClient.Execute(request);
