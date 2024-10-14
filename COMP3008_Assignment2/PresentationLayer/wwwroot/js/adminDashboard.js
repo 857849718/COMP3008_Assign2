@@ -121,7 +121,7 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
             userDiv.appendChild(userTable);
             users.forEach(user => {
                 const row = document.createElement("tr");
-                const userInfo = [user.firstName, user.lastName, user.email, user.address, user.phone, user.password, user.accountID];
+                const userInfo = [user.firstName, user.lastName, user.address, user.phone, user.password, user.email, user.accountID];
                 userInfo.forEach(info => {
                     const infoCell = document.createElement("td");
                     infoCell.innerText = info;
@@ -153,7 +153,7 @@ function modify(userInfo) {
     modifyTable.style.padding = "5px";
     modifyTable.style.border = "2px solid #0f45a9";
     modifyDiv.appendChild(modifyTable);
-    const headers = ["First Name", "Last Name", "Email", "Address", "Phone", "Password", "Account ID"];
+    const headers = ["First Name", "Last Name", "Address", "Phone", "Password", "Email", "Account ID"];
     const headerRow = document.createElement("tr");
     headers.forEach(header => {
         const th = document.createElement("th");
@@ -166,6 +166,8 @@ function modify(userInfo) {
     let accountID = userInfo[6];
     console.log(accountID);
     userInfo.pop(); // remove account ID as input (can't be changed)
+    let email = userInfo[5];
+    userInfo.pop(); // remove email for same reason
     userInfo.forEach(data => {
         const modifyData = document.createElement("input")
         modifyData.type = "text";
@@ -178,12 +180,16 @@ function modify(userInfo) {
         userRow.append(td);
     });
 
-    const accID = document.createElement("td");
-    accID.style.border = "2px solid #0f45a9";
-    accID.padding = "2px";
-    accID.textAlign = "center";
-    accID.innerText = accountID;
-    userRow.append(accID);
+    const persistent = [email, accountID];
+    persistent.forEach(member => {
+        const temp = document.createElement("td");
+        temp.style.border = "2px solid #0f45a9";
+        temp.padding = "2px";
+        temp.textAlign = "center";
+        temp.innerText = member;
+        userRow.append(temp);
+    });
+    
     modifyTable.appendChild(userRow);
 
     const buttons = ["Update", "Deactivate"];
@@ -191,7 +197,12 @@ function modify(userInfo) {
         const b = document.createElement("button");
         b.innerText = button;
         modifyDiv.appendChild(b);
+        b.onclick = () => modifyUser();
     });
+}
+
+function modifyUser() {
+
 }
 
 
