@@ -58,5 +58,20 @@ namespace BusinessTier.Controllers
             return BadRequest("Account failed to delete");
         }
 
+        [HttpGet]
+        [Route("getlatestid")]
+        public IActionResult GetLatestID()
+        {
+            try
+            {
+                int i = AccountsOps.GetAccountID();
+                return Ok(i);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

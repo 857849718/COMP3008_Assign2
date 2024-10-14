@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PresentationLayer.Models;
 using RestSharp;
+using System.Security.Principal;
 
 namespace PresentationLayer.Controllers
 {
@@ -166,12 +167,58 @@ namespace PresentationLayer.Controllers
         // method to create a new account
         [HttpPost]
         [Route("create")]
-        public IActionResult CreateUser([FromBody] UserProfileIntermed profile)
+        public IActionResult CreateUser([FromBody] CreateUserIntermed createUser)
         {
+            AccountIntermed newAccount = new AccountIntermed();
+            newAccount.FirstName = createUser.FirstName;
+            newAccount.LastName = createUser.LastName;
+            newAccount.Balance = createUser.Balance;
+
             // needs to first create the account, and then the user
             RestClient restClient = new RestClient("http://localhost:5186");
-            var request = new RestRequest($"/api/user/", Method.Patch);
-            request.AddJsonBody(profile);
+            var request = new RestRequest($"/api/acc/", Method.Post);
+            request.AddJsonBody(newAccount);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                CreateProfile(createUser);
+                return Ok(response);
+            }
+            return null;
+        }
+
+        private IActionResult CreateProfile(CreateUserIntermed createUser)
+        {
+            UserProfileIntermed newUser = new UserProfileIntermed();
+
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/acc/getlatestid", Method.Get);
+            //request.AddJsonBody(newUser);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var latestID = JsonConvert.DeserializeObject<int>(response.Content);
+                newUser.FirstName = createUser.FirstName;
+                newUser.LastName = createUser.LastName;
+                newUser.Email = createUser.Email;
+                newUser.Address = createUser.Address;
+                newUser.Phone = createUser.Phone; 
+                newUser.Password = createUser.Password; 
+                newUser.AccountID = latestID;
+                InsertUser(newUser);
+
+                return Ok(response);
+            }
+            return null;
+        }
+
+        private IActionResult InsertUser(UserProfileIntermed newUser)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user", Method.Post);
+            request.AddJsonBody(newUser);
             RestResponse response = restClient.Execute(request);
 
             if (response.IsSuccessful)

@@ -208,26 +208,26 @@ function create() {
         balance: rowArray[6],
     };
 
-    //fetch('/api/admin/create', {
-    //    method: 'PATCH',
-    //    headers: {
-    //        'Content-Type': 'application/json',
-    //    },
-    //    body: JSON.stringify(userProfile)
-    //})
-    //    .then(response => {
-    //        if (!response.ok) {
-    //            throw new Error('Network response not ok');
-    //        }
-    //        return response.json();
-    //    })
-    //    .then(data => {
-    //        console.log(data);
-    //    })
-    //    .catch(error => {
-    //        console.error(error);
-    //    });
-    //clearDiv();
+    fetch('/api/admin/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userProfile)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    clearDiv();
 }
 
 function modify(userInfo, flag) {
