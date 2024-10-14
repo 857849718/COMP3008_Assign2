@@ -130,12 +130,21 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
                     infoCell.textAlign = "center";
                     row.appendChild(infoCell);
                 })
+                const selectUser = document.createElement("button");
+                selectUser.innerText = "Modify";
+                selectUser.onclick = () => modify(userInfo);
+                row.appendChild(selectUser);
                 userTable.appendChild(row);
             });
 
         })
         .catch(error => console.error("Error: ", error));
 }
+
+function modify(userInfo) {
+    alert(userInfo[0]);
+}
+
 
 function loadTransactions() {
     clearDiv();
