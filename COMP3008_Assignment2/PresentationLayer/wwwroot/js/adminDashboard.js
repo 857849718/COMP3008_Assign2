@@ -63,6 +63,13 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
             request = '/api/admin/' + filterValue;
             console.log(request);
         }
+        else if (selectedFilter == "Account ID") {
+            console.log("Account ID selected");
+            filterValue = filterValue.trim();
+            console.log("Account ID chosen: " + filterValue);
+            request = '/api/admin/' + filterValue;
+            console.log(request);
+        }
     }
     fetch(request)
         .then(response => {
