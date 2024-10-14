@@ -2,7 +2,7 @@
 {
     public class AdminLogger
     {
-        static int logNumber = 0;
+        static int logNumber;
 
         // class to log admin activities
         public static void Log(string action, Boolean success)
@@ -20,11 +20,11 @@
                 string result = "";
                 if (success)
                 {
-                    result = "RESULT: SUCCESSFUL | ";
+                    result = "RESULT: Successful | ";
                 }
                 else
                 {
-                    result = "RESULT: FAILED | ";
+                    result = "RESULT: Failed | ";
                 }
 
                 string newLongString = logNo + action + result + time;
