@@ -49,9 +49,11 @@ function loadAll() {
 
 function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
     let request = '/api/admin/getusers'; // default -> will retrieve all users
-    if (filterValue != null) {
+    if (filterValue.trim() != "") {
+        console.log("filter value not empty");
         if (selectedFilter = "Email") {
-            request = 
+            filterValue = filterValue.trim();
+            request = '/api/admin/getuserbyemail/'+filterValue;
         }
     }
     fetch(request)
