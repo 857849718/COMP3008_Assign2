@@ -1,0 +1,38 @@
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:05:50 PM
+LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:05:51 PM
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:07:20 PM
+LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:07:21 PM
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:20:54 PM
+LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:20:55 PM
+LOG NUMBER: 2 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:21:05 PM
+LOG NUMBER: 3 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:21:08 PM
+LOG NUMBER: 4 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:21:10 PM
+LOG NUMBER: 5 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:21:13 PM
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:21:52 PM
+LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:21:53 PM
+LOG NUMBER: 2 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:22:02 PM
+LOG NUMBER: 3 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:22:09 PM
+LOG NUMBER: 4 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:22:13 PM
+LOG NUMBER: 5 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:14 PM
+LOG NUMBER: 6 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:22:14 PM
+LOG NUMBER: 7 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:15 PM
+LOG NUMBER: 8 |ACTION: Retrieve Users By Last Name dsf |RESULT: Successful |  TIME: 11:22:19 PM
+LOG NUMBER: 9 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:20 PM
+LOG NUMBER: 10 |ACTION: Retrieve Users By ID 3 |RESULT: Successful |  TIME: 11:22:26 PM
+LOG NUMBER: 11 |ACTION: Update User remotecallb4ck@yahoo.com |RESULT: Successful |  TIME: 11:22:31 PM
+LOG NUMBER: 12 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:33 PM
+LOG NUMBER: 13 |ACTION: Update User cloud.servervm@gmail.com |RESULT: Successful |  TIME: 11:22:40 PM
+LOG NUMBER: 14 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:41 PM
+LOG NUMBER: 15 |ACTION: Delete User By Email ruffle1877@hotmail.com |RESULT: Successful |  TIME: 11:22:47 PM
+LOG NUMBER: 16 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:48 PM
+LOG NUMBER: 17 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:22:51 PM
+LOG NUMBER: 18 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:22:52 PM
+LOG NUMBER: 19 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:23:13 PM
+LOG NUMBER: 20 |ACTION: Create User |RESULT: Successful |  TIME: 11:23:36 PM
+LOG NUMBER: 21 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:23:43 PM
+LOG NUMBER: 22 |ACTION: Delete User By Email disagfgiudsahf |RESULT: Successful |  TIME: 11:23:46 PM
+LOG NUMBER: 23 |ACTION: Retrieve All Users |RESULT: Successful |  TIME: 11:23:47 PM
+LOG NUMBER: 24 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:23:54 PM
+LOG NUMBER: 0 |ACTION: Retrieve Profile By Email admin@bankingsolutions.com |RESULT: Successful |  TIME: 11:25:09 PM
+LOG NUMBER: 1 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:25:14 PM
+LOG NUMBER: 2 |ACTION: Retrieve All Transactions |RESULT: Successful |  TIME: 11:25:20 PM
