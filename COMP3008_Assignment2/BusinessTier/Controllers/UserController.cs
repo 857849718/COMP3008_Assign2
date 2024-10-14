@@ -59,6 +59,19 @@ namespace BusinessTier.Controllers
             return NotFound($"No profiles in database matching {id}");
         }
 
+        // retrieve LIST of user profiles by last name
+        [HttpGet]
+        [Route("getprofilesbylastname/{lastName}")]
+        public IActionResult GetProfilesByLastName(string lastName)
+        {
+            List<UserProfile> profiles = ProfilesOps.GetProfilesByLastName(lastName);
+            if (profiles != null)
+            {
+                return Ok(profiles);
+            }
+            return NotFound($"No profiles in database matching {lastName}");
+        }
+
         // update profile
         [HttpPatch]
         public IActionResult UpdateProfile([FromBody] UserProfile profile)

@@ -306,5 +306,51 @@ namespace DataTier.Database
 
             return profileList;
         }
+
+        public static List<UserProfile> GetProfilesByLastName(string lastName)
+        {
+            // initalize list of profiles
+            List<UserProfile> profileList = new List<UserProfile>();
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        // query to retrieve profile based on primary key
+                        command.CommandText = "SELECT * FROM Profiles WHERE LastName = @LastName";
+                        command.Parameters.AddWithValue("@LastName", lastName);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // create new profile with read values
+                                UserProfile profile = new UserProfile(
+                                    reader["FirstName"].ToString(),
+                                    reader["LastName"].ToString(),
+                                    reader["Email"].ToString(),
+                                    reader["Address"].ToString(),
+                                    Convert.ToInt32(reader["Phone"]),
+                                    reader["Password"].ToString(),
+                                    Convert.ToInt32(reader["AccountID"])
+                                );
+
+                                // add profile to profilesList
+                                profileList.Add(profile);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return profileList;
+        }
     }
 }
