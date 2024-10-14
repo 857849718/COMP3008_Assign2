@@ -1,9 +1,5 @@
 ﻿console.log("admin dashboard loaded");
 
-/*
-    1.) Create table using document.createElement (append to last element)
-
-*/
 let currentDiv = null;
 
 function clearDiv() {
@@ -359,10 +355,73 @@ function modifyUser(action, email) {
     }
 }
 
-
-function loadTransactions() {
+function transactionEntry() {
     clearDiv();
-    fetch('/api/admin/gettransactions')
+    const transacDiv = document.createElement("div");
+    const filterBox = document.createElement("select");
+    filterBox.innerText = "Filter Transactions By:";
+    currentDiv = transacDiv;
+
+    const endElement = document.getElementById("adminButtons");
+    const filterText = document.createElement("input");
+    filterText.type = "text";
+    filterText.placeholder = "Value";
+    filterText.id = "filterText";
+    endElement.appendChild(transacDiv);
+    transacDiv.appendChild(filterBox);
+    const filterChoices = ["Minimum Withdraw", "Minimum Deposit", "Account ID"];
+    filterChoices.forEach(choice => {
+        const option = document.createElement("option");
+        option.value = choice;
+        option.innerText = choice;
+        filterBox.appendChild(option);
+    });
+    const filterButton = document.createElement("button");
+    filterButton.innerText = "Filter";
+    filterBox.id = "filterBox";
+
+    filterButton.onclick = () => {
+        clearDiv();
+        const selectedFilter = filterBox.value;
+        const filterValue = filterText.value;
+        const filteredTransacDiv = document.createElement("div");
+        currentDiv = filteredTransacDiv;
+        endElement.appendChild(filteredTransacDiv);
+        loadTransactions(filteredTransacDiv, selectedFilter, filterValue);
+    }
+    transacDiv.appendChild(filterText);
+    transacDiv.appendChild(filterButton);
+
+    loadTransactions(transacDiv);
+}
+
+function loadTransactions(transacDiv, selectedFilter = "", filterValue = "") {
+    let request = '/api/admin/gettransactions'; // default -> will retrieve all transactions
+    if (filterValue.trim() != "") {
+        console.log("filter value not empty");
+        if (selectedFilter == "Minimum Withdraw") {
+            console.log("Minimum Withdraw selected");
+            filterValue = filterValue.trim();
+            console.log("Minimum Withdraw chosen: " + filterValue);
+            request = '/api/admin/minwithdraw/' + filterValue;
+            console.log(request);
+        }
+        else if (selectedFilter == "Minimum Deposit") {
+            console.log("Minimum Deposit selected");
+            filterValue = filterValue.trim();
+            console.log("Minimum Deposit chosen: " + filterValue);
+            request = '/api/admin/mindeposit/' + filterValue;
+            console.log(request);
+        }
+        else if (selectedFilter == "Account ID") {
+            console.log("Account ID selected");
+            filterValue = filterValue.trim();
+            console.log("Account ID chosen: " + filterValue);
+            request = '/api/admin/transacid/' + filterValue;
+            console.log(request);
+        }
+    }
+    fetch(request)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response not ok');
@@ -370,9 +429,7 @@ function loadTransactions() {
             return response.json();
         })
         .then(data => {
-            const transacDiv = document.createElement("div");
             const transacTable = document.createElement("table");
-            currentDiv = transacDiv;
 
             const amountCol = document.createElement("th");
             amountCol.innerText = "Amount";
@@ -393,8 +450,6 @@ function loadTransactions() {
             transacTable.style.padding = "5px";
             transacTable.style.border = "2px solid #0f45a9";
 
-            const endElement = document.getElementById("adminButtons");
-            endElement.appendChild(transacDiv);
             transacDiv.appendChild(transacTable);
             data.forEach(transaction => {
                 const row = document.createElement("tr");

@@ -146,5 +146,49 @@ namespace BusinessTier.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("mindeposit/{amount}")]
+        public IActionResult GetTransactionsByMinDeposit(double amount)
+        {
+            try
+            {
+                List<Transaction> transactions = TransactionsOps.GetTransactionsByMinDeposit(amount);
+                if (transactions != null)
+                {
+                    return Ok(transactions);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("minwithdraw/{amount}")]
+        public IActionResult GetTransactionsByMinWithdraw(double amount)
+        {
+            try
+            {
+                List<Transaction> transactions = TransactionsOps.GetTransactionsByMinWithdraw(amount);
+                if (transactions != null)
+                {
+                    return Ok(transactions);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
