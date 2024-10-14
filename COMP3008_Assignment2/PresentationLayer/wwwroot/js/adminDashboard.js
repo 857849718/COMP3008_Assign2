@@ -52,8 +52,11 @@ function loadUsers(userDiv, selectedFilter = "", filterValue = "") {
     if (filterValue.trim() != "") {
         console.log("filter value not empty");
         if (selectedFilter = "Email") {
+            console.log("Email selected");
             filterValue = filterValue.trim();
-            request = '/api/admin/getuserbyemail/'+filterValue;
+            console.log("Email chosen: " + filterValue);
+            request = '/api/admin/getuserbyemail/' + filterValue;
+            console.log(request);
         }
     }
     fetch(request)

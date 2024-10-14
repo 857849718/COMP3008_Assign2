@@ -79,7 +79,7 @@ namespace PresentationLayer.Controllers
 
         // method to retrieve list of users based on email
         [HttpGet]
-        [Route("getuserbyemail")]
+        [Route("getuserbyemail/{email}")]
         public IActionResult GetUsersByEmail(string email)
         {
             RestClient restClient = new RestClient("http://localhost:5186");

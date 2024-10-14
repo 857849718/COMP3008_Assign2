@@ -173,10 +173,10 @@ namespace DataTier.Database
             return profileList;
         }
 
-        public static UserProfile GetProfileByEmail(string email)
+        public static List<UserProfile> GetProfileByEmail(string email)
         {
-            // initialize profile
-            UserProfile profile = null;
+            // initalize list of profiles
+            List<UserProfile> profileList = new List<UserProfile>();
             try
             {
                 using (SQLiteConnection connection = new SQLiteConnection(connectString))
@@ -191,9 +191,10 @@ namespace DataTier.Database
 
                         using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-                                profile = new UserProfile(
+                                // create new profile with read values
+                                UserProfile profile = new UserProfile(
                                     reader["FirstName"].ToString(),
                                     reader["LastName"].ToString(),
                                     reader["Email"].ToString(),
@@ -202,6 +203,9 @@ namespace DataTier.Database
                                     reader["Password"].ToString(),
                                     Convert.ToInt32(reader["AccountID"])
                                 );
+
+                                // add profile to profilesList
+                                profileList.Add(profile);
                             }
                         }
                     }
@@ -212,7 +216,7 @@ namespace DataTier.Database
                 Console.WriteLine("Error: " + oof.Message);
             }
 
-            return profile;
+            return profileList;
         }
     }
 }
