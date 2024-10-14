@@ -77,21 +77,24 @@ namespace PresentationLayer.Controllers
             return null;
         }
 
-        // method to retrieve list of transactions based on email
+        // method to retrieve list of users based on email
         [HttpGet]
-        [Route("gettransactionsbyemail")]
-        public IActionResult GetTransactionsByEmail()
+        [Route("getusersbyemail")]
+        public IActionResult GetUsersByEmail(string email)
         {
             RestClient restClient = new RestClient("http://localhost:5186");
-            var request = new RestRequest("/api/transac/gettransactionsbyemail", Method.Get);
+            var request = new RestRequest($"/api/user/getprofilebyemail/{email}", Method.Get);
             RestResponse response = restClient.Execute(request);
 
             if (response.IsSuccessful)
             {
-                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
-                return Ok(transactions);
+                var profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                return Ok(profiles);
+                //List<UserProfileIntermed> profiles = JsonConvert.DeserializeObject<List<UserProfileIntermed>>(response.Content);
+                //return profiles;
             }
             return null;
         }
+
     }
 }
