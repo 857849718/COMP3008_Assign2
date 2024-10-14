@@ -46,6 +46,19 @@ namespace BusinessTier.Controllers
             return NotFound($"No profiles in database matching {email}");
         }
 
+        // retrieve LIST of user profiles by email
+        [HttpGet]
+        [Route("getprofilesbyid/{id}")]
+        public IActionResult GetProfilesByID(int id)
+        {
+            List<UserProfile> profiles = ProfilesOps.GetProfilesByID(id);
+            if (profiles != null)
+            {
+                return Ok(profiles);
+            }
+            return NotFound($"No profiles in database matching {id}");
+        }
+
         // update profile
         [HttpPatch]
         public IActionResult UpdateProfile([FromBody] UserProfile profile)
