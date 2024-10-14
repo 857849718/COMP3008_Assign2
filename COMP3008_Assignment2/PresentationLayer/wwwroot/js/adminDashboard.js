@@ -395,8 +395,33 @@ function transactionEntry() {
     loadTransactions(transacDiv);
 }
 
-function loadTransactions(transacDiv) {
-    fetch('/api/admin/gettransactions')
+function loadTransactions(transacDiv, selectedFilter = "", filterValue = "") {
+    let request = '/api/admin/gettransactions'; // default -> will retrieve all transactions
+    if (filterValue.trim() != "") {
+        console.log("filter value not empty");
+        if (selectedFilter == "Minimum Withdraw") {
+            console.log("Minimum Withdraw selected");
+            filterValue = filterValue.trim();
+            console.log("Minimum Withdraw chosen: " + filterValue);
+            request = '/api/admin/' + filterValue;
+            console.log(request);
+        }
+        else if (selectedFilter == "Minimum Deposit") {
+            console.log("Minimum Deposit selected");
+            filterValue = filterValue.trim();
+            console.log("Minimum Deposit chosen: " + filterValue);
+            request = '/api/admin/getusersbyid/' + filterValue;
+            console.log(request);
+        }
+        else if (selectedFilter == "Account ID") {
+            console.log("Account ID selected");
+            filterValue = filterValue.trim();
+            console.log("Account ID chosen: " + filterValue);
+            request = '/api/admin/getusersbylastname/' + filterValue;
+            console.log(request);
+        }
+    }
+    fetch(request)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response not ok');

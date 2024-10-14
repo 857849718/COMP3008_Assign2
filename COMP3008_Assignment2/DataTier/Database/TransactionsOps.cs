@@ -137,5 +137,94 @@ namespace DataTier.Database
 
             return transactionList;
         }
+
+        public static List<Transaction> GetTransactionsByMinWithdraw(double amount)
+        {
+            // initalize list of transactions
+            List<Transaction> transactionList = new List<Transaction>();
+
+            if (amount > 0)
+            {
+                amount = -Math.Abs(amount);
+            }
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT * FROM Transactions WHERE Amount <= @Amount";
+                        command.Parameters.AddWithValue("@Amount", amount);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // create new transaction with read values
+                                Transaction transaction = new Transaction(
+                                    Convert.ToDouble(reader["Amount"]),
+                                    Convert.ToInt32(reader["AccountID"]),
+                                    reader["Description"].ToString(),
+                                    reader["Time"].ToString()
+                                );
+
+                                // add transaction to transactionList
+                                transactionList.Add(transaction);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return transactionList;
+        }
+
+        public static List<Transaction> GetTransactionsByMinDeposit(double amount)
+        {
+            // initalize list of transactions
+            List<Transaction> transactionList = new List<Transaction>();
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(connectString))
+                {
+                    connection.Open();
+
+                    using (SQLiteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT * FROM Transactions WHERE Amount >= @Amount";
+                        command.Parameters.AddWithValue("@Amount", amount);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // create new transaction with read values
+                                Transaction transaction = new Transaction(
+                                    Convert.ToDouble(reader["Amount"]),
+                                    Convert.ToInt32(reader["AccountID"]),
+                                    reader["Description"].ToString(),
+                                    reader["Time"].ToString()
+                                );
+
+                                // add transaction to transactionList
+                                transactionList.Add(transaction);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oof)
+            {
+                Console.WriteLine("Error: " + oof.Message);
+            }
+
+            return transactionList;
+        }
     }
 }
