@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PresentationLayer.Models;
 using RestSharp;
 
 namespace PresentationLayer.Controllers
@@ -150,6 +151,24 @@ namespace PresentationLayer.Controllers
         [Route("update")]
         public IActionResult UpdateUser([FromBody] UserProfileIntermed profile)
         {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/user/", Method.Patch);
+            request.AddJsonBody(profile);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                return Ok(response);
+            }
+            return null;
+        }
+
+        // method to create a new account
+        [HttpPost]
+        [Route("create")]
+        public IActionResult CreateUser([FromBody] UserProfileIntermed profile)
+        {
+            // needs to first create the account, and then the user
             RestClient restClient = new RestClient("http://localhost:5186");
             var request = new RestRequest($"/api/user/", Method.Patch);
             request.AddJsonBody(profile);

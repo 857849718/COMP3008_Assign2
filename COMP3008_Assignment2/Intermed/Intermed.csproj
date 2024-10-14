@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountIntermed.cs" />
+    <Compile Include="CreateUserIntermed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionIntermed.cs" />
     <Compile Include="UserProfileIntermed.cs" />

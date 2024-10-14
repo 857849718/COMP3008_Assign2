@@ -153,7 +153,7 @@ function createUser() {
     createTable.style.padding = "5px";
     createTable.style.border = "2px solid #0f45a9";
     createDiv.appendChild(createTable);
-    const headers = ["First Name", "Last Name", "Address", "Phone", "Password", "Email"];
+    const headers = ["First Name", "Last Name", "Address", "Phone", "Password", "Email", "Balance"];
     const headerRow = document.createElement("tr");
     headers.forEach(header => {
         const th = document.createElement("th");
@@ -165,7 +165,7 @@ function createUser() {
     const createRow = document.createElement("tr");
     createRow.id = "createRow";
 
-    const placeholders = ["First Name", "Last Name", "Address", "Phone", "Password", "Email"];
+    const placeholders = ["First Name", "Last Name", "Address", "Phone", "Password", "Email", "Balance"];
     placeholders.forEach(p => {
         const createData = document.createElement("input")
         createData.type = "text";
@@ -183,6 +183,51 @@ function createUser() {
     createButton.innerText = "Create User";
     createButton.textAlign = "center";
     createDiv.appendChild(createButton);
+
+    createButton.onclick = () => create();
+}
+
+function create() {
+    const row = document.getElementById("createRow");
+    const rowCells = row.querySelectorAll("td");
+    const rowArray = Array.from(rowCells).map(cell => {
+        const input = cell.querySelector('input');
+        return input ? input.value : cell.textContent;
+    });
+    rowArray.forEach(info => {
+        console.log(info);
+    });
+
+    const userProfile = {
+        firstName: rowArray[0],
+        lastName: rowArray[1],
+        address: rowArray[2],
+        phone: rowArray[3],
+        password: rowArray[4],
+        email: rowArray[5],
+        balance: rowArray[6],
+    };
+
+    //fetch('/api/admin/create', {
+    //    method: 'PATCH',
+    //    headers: {
+    //        'Content-Type': 'application/json',
+    //    },
+    //    body: JSON.stringify(userProfile)
+    //})
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Network response not ok');
+    //        }
+    //        return response.json();
+    //    })
+    //    .then(data => {
+    //        console.log(data);
+    //    })
+    //    .catch(error => {
+    //        console.error(error);
+    //    });
+    //clearDiv();
 }
 
 function modify(userInfo, flag) {
