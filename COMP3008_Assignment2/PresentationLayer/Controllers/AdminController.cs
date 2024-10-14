@@ -228,5 +228,56 @@ namespace PresentationLayer.Controllers
             return null;
         }
 
+        // method to retrieve list of transactions based on min withdraw
+        [HttpGet]
+        [Route("minwithdraw/{amount}")]
+        public IActionResult GetTransactionsByMinWithdraw(double amount)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/transac/minwithdraw/{amount}", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+                return Ok(transactions);
+            }
+            return null;
+        }
+
+        // method to retrieve list of transactions based on min deposit
+        [HttpGet]
+        [Route("mindeposit/{amount}")]
+        public IActionResult GetTransactionsByMinDeposit(double amount)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/transac/mindeposit/{amount}", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+                return Ok(transactions);
+            }
+            return null;
+        }
+
+        // method to retrieve list of transactions based on account ID
+        [HttpGet]
+        [Route("transacid/{id}")]
+        public IActionResult GetTransactionsByID(int id)
+        {
+            RestClient restClient = new RestClient("http://localhost:5186");
+            var request = new RestRequest($"/api/transac/{id}", Method.Get);
+            RestResponse response = restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                var transactions = JsonConvert.DeserializeObject<List<TransactionIntermed>>(response.Content);
+                return Ok(transactions);
+            }
+            return null;
+        }
+
     }
 }

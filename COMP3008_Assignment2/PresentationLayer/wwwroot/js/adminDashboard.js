@@ -403,21 +403,21 @@ function loadTransactions(transacDiv, selectedFilter = "", filterValue = "") {
             console.log("Minimum Withdraw selected");
             filterValue = filterValue.trim();
             console.log("Minimum Withdraw chosen: " + filterValue);
-            request = '/api/admin/' + filterValue;
+            request = '/api/admin/minwithdraw/' + filterValue;
             console.log(request);
         }
         else if (selectedFilter == "Minimum Deposit") {
             console.log("Minimum Deposit selected");
             filterValue = filterValue.trim();
             console.log("Minimum Deposit chosen: " + filterValue);
-            request = '/api/admin/getusersbyid/' + filterValue;
+            request = '/api/admin/mindeposit/' + filterValue;
             console.log(request);
         }
         else if (selectedFilter == "Account ID") {
             console.log("Account ID selected");
             filterValue = filterValue.trim();
             console.log("Account ID chosen: " + filterValue);
-            request = '/api/admin/getusersbylastname/' + filterValue;
+            request = '/api/admin/transacid/' + filterValue;
             console.log(request);
         }
     }
