@@ -163,6 +163,9 @@ function modify(userInfo) {
     });
     modifyTable.appendChild(headerRow);
     const userRow = document.createElement("tr");
+    let accountID = userInfo[6];
+    console.log(accountID);
+    userInfo.pop(); // remove account ID as input (can't be changed)
     userInfo.forEach(data => {
         const modifyData = document.createElement("input")
         modifyData.type = "text";
@@ -174,6 +177,13 @@ function modify(userInfo) {
         td.appendChild(modifyData);
         userRow.append(td);
     });
+
+    const accID = document.createElement("td");
+    accID.style.border = "2px solid #0f45a9";
+    accID.padding = "2px";
+    accID.textAlign = "center";
+    accID.innerText = accountID;
+    userRow.append(accID);
     modifyTable.appendChild(userRow);
 
     const buttons = ["Update", "Deactivate"];
